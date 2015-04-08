@@ -17,8 +17,8 @@ interface ChatServer extends Remote{
     public Role getRole() throws RemoteException;
     public void closeRole() throws RemoteException;
     public int getLength() throws RemoteException;
-    public void storeRequest(Cloud.FrontEndOps.Request request) throws RemoteException;
-    public Cloud.FrontEndOps.Request getRequest() throws RemoteException;
+    public void storeRequest(RequestPack request) throws RemoteException;
+    public RequestPack getRequest() throws RemoteException;
 	public void setFlag() throws RemoteException;
 }
 
@@ -31,7 +31,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static ArrayList<Role> midTier= new ArrayList<Role>();
     public static ServerLib SL;
     public static Role role;
-    public static LinkedList<Cloud.FrontEndOps.Request> requests= new LinkedList<Cloud.FrontEndOps.Request>();
+    public static LinkedList<RequestPack> requests= new LinkedList<RequestPack>();
     public static int threshHoldAvg = 2;
 	public static boolean startNotification = false; 
 
@@ -50,6 +50,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         } catch(Exception err) {
             System.out.println(err.getMessage());
         }
+		System.out.println("Instance added");
     }
 	// Method for Slaves to call Master to identify his role
 	public Role getRole() {
@@ -69,6 +70,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         } catch(NoSuchObjectException err) {
             err.printStackTrace();
         }
+		System.out.println("Instance removed");
     }
 
     public int getLength() {
@@ -79,7 +81,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     * RMI Methods for Front Tier
     * */
     // Methods for the front tier VM to call the leader 
-    public void storeRequest(Cloud.FrontEndOps.Request request) {
+    public void storeRequest(RequestPack request) {
     	requests.add(request);
     }
 	// Method for Front tier to notify completion
@@ -91,7 +93,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     * RMI Methods for Mid Tier
     * */
     // Methods for Mid Tier to get request
-    public Cloud.FrontEndOps.Request getRequest() {
+    public RequestPack getRequest() {
     	return requests.poll();
     }
 
@@ -152,23 +154,16 @@ public class Server extends UnicastRemoteObject implements ChatServer{
                 Role temp = new RoleMidTier("midEnd"+String.valueOf(i));
                 roles.add(temp);
             }
-			for (int i=0; i<countForMid+countForFront; i++) {
-				//Thread tempThread =  new Thread(SL.startVM());
-                //tempThread.run();
-                SL.startVM();
-			}
-            SL.register_frontend();
 			Thread sch = new Thread(new Schedule(server, ip, port));
 			sch.start();
-			long start = System.currentTimeMillis();
-			while (System.currentTimeMillis()-start<3000) {
-                Cloud.FrontEndOps.Request r = SL.getNextRequest();
-				SL.drop(r);	
-			}
+            SL.register_frontend();
 			System.out.println("Start recieving request");
             while (true) {
-                Cloud.FrontEndOps.Request r = SL.getNextRequest();
-                requests.add(r);
+				try {
+                	Cloud.FrontEndOps.Request r = SL.getNextRequest();
+					RequestPack req = new RequestPack(System.currentTimeMillis(), r);
+                	requests.add(req);
+				} catch (Exception err){}
             }
 		}
         // Slave nodes: real workers
@@ -187,7 +182,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				System.out.println("Start recieving request");
                 while (true) {
                     Cloud.FrontEndOps.Request r = SL.getNextRequest();
-                    communicateMaster.storeRequest(r);
+					RequestPack req = new RequestPack(System.currentTimeMillis(), r);
+                    communicateMaster.storeRequest(req);
                 }
             } else if (role instanceof RoleMidTier) {
             	ChatServer frontLeader = null; 
@@ -195,13 +191,39 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 					frontLeader = getServerInstance(ip, port, "master");
 				System.out.println("Start Processing request");
 				frontLeader.setFlag();
-            	while (true) {
-            	    Cloud.FrontEndOps.Request r = frontLeader.getRequest();
-            	    SL.processRequest(r);
+				try{
+            		while (true) {
+						long now = System.currentTimeMillis();
+            	    	RequestPack req = frontLeader.getRequest();
+						if (req == null)
+							continue;
+						if (req.r.isPurchase) {
+							if (now-req.timeStamp>1850)
+								SL.drop(req.r);
+							else
+            	    			SL.processRequest(req.r);
+						} else {
+							if (now-req.timeStamp>850)
+								SL.drop(req.r);
+							else
+            	    			SL.processRequest(req.r);
+						}
+					}
+				} catch (Exception err){
+					System.out.println(err.getMessage());
 				}
             }
         }
     }
+}
+
+class RequestPack implements Serializable{
+	long timeStamp;
+	Cloud.FrontEndOps.Request r;
+	RequestPack(long timeStamp, Cloud.FrontEndOps.Request r) {
+		this.r = r;
+		this.timeStamp = timeStamp;
+	}
 }
 
 abstract class Role implements Serializable{
@@ -236,7 +258,9 @@ class Schedule implements Runnable {
         // Scale for both browse VM and purchase VM
         int curMid = 2;
 		try {
-			Thread.sleep(5000);
+			Server.SL.startVM();
+			Server.SL.startVM();
+			Thread.sleep(10000);
 			int countUp = 0;
 			int countDown = 0;
 			boolean lateScaleDown = false;
@@ -258,11 +282,10 @@ class Schedule implements Runnable {
     		    // scale for browse request VM and purchase request VM
     		    ArrayList<Integer> obUp = new ArrayList<Integer>();
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();
-    		    int acc = 0;
-    		    for (int i=0; i<5; i++) {
-    		        obDown.add(Server.requests.size());
-    		        obUp.add(Server.requests.size());
-    		    }
+    		    obDown.add(Server.requests.size());
+    		    obUp.add(Server.requests.size());
+				if (!lateScaleDown&&(System.currentTimeMillis()-st)>8000)
+					lateScaleDown = true; 
     		    if (Server.checkLength(obUp, true)) {
 					countUp++;
 					countDown = 0;
@@ -274,8 +297,6 @@ class Schedule implements Runnable {
 				}
 				countDown=0;
 				countUp=0;
-				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
-					lateScaleDown = true; 
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
