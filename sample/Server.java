@@ -239,8 +239,10 @@ class Schedule implements Runnable {
 			Thread.sleep(5000);
 			int countUp = 0;
 			int countDown = 0;
+			boolean lateScaleDown = false;
+			long st = System.currentTimeMillis();
     		while (true) {
-				if (countUp == 4 && (Server.midTier.size()+Server.roles.size())<14) {
+				if (countUp == 3 && (Server.midTier.size()+Server.roles.size())<14) {
     		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
 					Server.roles.add(temp);
     		    	Server.SL.startVM();
@@ -265,13 +267,15 @@ class Schedule implements Runnable {
 					countUp++;
 					countDown = 0;
 					continue;
-    		    } else if (Server.checkLength(obDown, false)){
+    		    } else if (lateScaleDown&&Server.checkLength(obDown, false)){
 					countDown++;
 					countUp = 0;
 					continue;
 				}
 				countDown=0;
 				countUp=0;
+				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
+					lateScaleDown = true; 
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
