@@ -34,6 +34,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static LinkedList<RequestPack> requests= new LinkedList<RequestPack>();
     public static int threshHoldAvg = 2;
 	public static boolean startNotification = false; 
+	public static ChatServer server; 
+	public static boolean flagShutDown = false;
 
  	public void initiateMaster(String ip, int port) {
 		try{
@@ -65,12 +67,14 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     // Method for Master to call to let Slaves to close
     public void closeRole() {
         SL.shutDown();
+		System.out.println("fuck you");
         try {
-            UnicastRemoteObject.unexportObject(this, true);
-        } catch(NoSuchObjectException err) {
-            err.printStackTrace();
-        }
-		System.out.println("Instance removed");
+            UnicastRemoteObject.unexportObject(server, true);
+			server = null;
+        } catch(Exception err) {
+      		err.printStackTrace();
+      	}
+		flagShutDown = true;
     }
 
     public int getLength() {
@@ -131,7 +135,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         String ip = args[0];
         int port = Integer.parseInt(args[1]);
 
-        ChatServer server = new Server();
+        server = new Server();
 		SL = new ServerLib( ip, port );
 		// register with load balancer so requests are sent to this server
         // Master Node
@@ -154,7 +158,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
                 Role temp = new RoleMidTier("midEnd"+String.valueOf(i));
                 roles.add(temp);
             }
-			Thread sch = new Thread(new Schedule(server, ip, port));
+			Thread sch = new Thread(new Schedule(ip, port));
 			sch.start();
             SL.register_frontend();
 			System.out.println("Start recieving request");
@@ -192,7 +196,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				System.out.println("Start Processing request");
 				frontLeader.setFlag();
 				try{
-            		while (true) {
+            		while (!flagShutDown) {
 						long now = System.currentTimeMillis();
             	    	RequestPack req = frontLeader.getRequest();
 						if (req == null)
@@ -246,11 +250,9 @@ class RoleMidTier extends Role {
 }
 
 class Schedule implements Runnable {
-	public ChatServer server;
 	public String ip;
 	public int port;
-	public Schedule(ChatServer server, String ip, int port) {
-		this.server = server;
+	public Schedule(String ip, int port) {
 		this.ip = ip;
 		this.port = port;
 	}	
@@ -260,7 +262,7 @@ class Schedule implements Runnable {
 		try {
 			Server.SL.startVM();
 			Server.SL.startVM();
-			Thread.sleep(10000);
+			Thread.sleep(6000);
 			int countUp = 0;
 			int countDown = 0;
 			boolean lateScaleDown = false;
@@ -272,13 +274,14 @@ class Schedule implements Runnable {
     		    	Server.SL.startVM();
 					countUp = 0;
 				}
-				if (countDown == 10 && (Server.midTier.size()>2)) {
+				if (countDown == 20 && (Server.midTier.size()+Server.roles.size())>2) {
 					Role temp = Server.midTier.remove(0);
     		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
     		        del.closeRole();
+					System.out.println("Role delete"+temp.nameRegistered);
 					countDown = 0;
 				}
-				Thread.sleep(250);
+				Thread.sleep(200);
     		    // scale for browse request VM and purchase request VM
     		    ArrayList<Integer> obUp = new ArrayList<Integer>();
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();

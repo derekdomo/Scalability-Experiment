@@ -1,0 +1,131 @@
+Starting Cloud
+Mix responsibilities check: false
+Cloud is registered
+VM 0 Booting
+VM 1 Booting
+VM 1 Running
+VM 0 Running
+VM 2 Booting
+VM 3 Booting
+VM 4 Booting
+VM 5 Booting
+Time 3333
+client 0 started
+client 0 browse TOPLEVEL
+VM 2 Running
+VM 3 Running
+VM 4 Running
+VM 5 Running
+client 0 got reply 
+client 0 ended, status: timeout
+Time 6668
+client 1 started
+client 1 browse TOPLEVEL
+client 1 got reply Jewelry, Electronics, Office Supplies, Pets
+client 1 browse  Office Supplies
+client 1 got reply Writing Instruments, Stationary
+error replying to request -- not found Request{2, Office Supplies}
+Time 10001
+client 2 started
+client 2 browse TOPLEVEL
+client 2 got reply Jewelry, Electronics, Office Supplies, Pets
+client 2 browse  Electronics
+client 1 browse Writing Instruments
+client 2 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 1 got reply pen, No. 2 pencil, typewriter
+Time 13335
+client 3 started
+client 3 browse TOPLEVEL
+client 2 browse  iPhone
+client 1 browse  typewriter
+client 3 got reply Jewelry, Electronics, Office Supplies, Pets
+client 2 got reply ITEM,600.0,10
+client 1 got reply ITEM,150.0,5
+client 3 browse Jewelry
+client 3 got reply Ring, Necklace, Earring, Bracelet
+client 2 purchase  iPhone
+client 1 purchase  typewriter
+client 2 ended, status: purchased
+client 1 ended, status: purchased
+Time 16668
+client 4 started
+client 4 browse TOPLEVEL
+VM 5 Ended
+client 4 got reply Jewelry, Electronics, Office Supplies, Pets
+client 3 browse  Necklace
+client 3 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 4 browse  Pets
+client 4 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 3 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 3 got reply ITEM,535.97,3792
+VM 3 Ended
+Time 20002
+client 5 started
+client 5 browse TOPLEVEL
+client 5 got reply Jewelry, Electronics, Office Supplies, Pets
+client 4 browse  frog
+client 4 got reply ITEM,200.28,2054
+client 3 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 4 purchase  frog
+client 3 ended, status: purchased
+client 4 ended, status: purchased
+client 5 browse  Office Supplies
+client 5 got reply Writing Instruments, Stationary
+Time 23335
+client 6 started
+client 6 browse TOPLEVEL
+client 5 browse Writing Instruments
+client 6 got reply Jewelry, Electronics, Office Supplies, Pets
+client 5 got reply pen, No. 2 pencil, typewriter
+client 5 browse pen
+client 5 got reply ITEM,1.25,1000
+client 5 ended, status: ok
+client 6 browse  Electronics
+client 6 got reply iPad, iPhone, Android Devices, bluetooth headset
+Time 26669
+client 7 started
+client 7 browse TOPLEVEL
+client 7 got reply Jewelry, Electronics, Office Supplies, Pets
+client 6 browse  iPhone
+client 6 got reply ITEM,600.0,9
+client 6 ended, status: ok
+client 7 browse Jewelry
+client 7 got reply Ring, Necklace, Earring, Bracelet
+client 7 browse  Necklace
+client 7 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 7 browse  Diamond Leaf Pendant Necklace
+client 7 got reply ITEM,882.18,1363
+client 7 purchase  Diamond Leaf Pendant Necklace
+client 7 ended, status: purchased
+END
+Stats: {purchased=5, ok=2, timeout=1}
+Total sales: 2368.43
+Total erroneous sales: 0.0
+VM 0 Ended
+VM 1 Ended
+VM 2 Ended
+VM 4 Ended
+VM 0 Output ----------------
+VM 1 Output ----------------
+Start recieving request
+Role deletemidEnd0
+Role deletemidEnd1
+VM 2 Output ----------------
+Instance added
+Start Processing request
+VM 3 Output ----------------
+Instance added
+Start Processing request
+fuck you
+VM 4 Output ----------------
+Instance added
+Start Processing request
+Error unmarshaling return header; nested exception is: 
+	java.io.EOFException
+VM 5 Output ----------------
+Instance added
+Start Processing request
+fuck you
+--------------------------
+Total VM time: 172460
+Cloud shutdown
