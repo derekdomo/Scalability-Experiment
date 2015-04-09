@@ -117,13 +117,13 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static boolean checkLength(ArrayList<Integer> ob, boolean up) {
 		if (up) {
        		for (Integer it:ob) {
-       	 	    if (it<midTier.size())
+       	 	    if (it<(midTier.size()+roles.size()))
        	 	    	return false;
        	 	}
 			return true;
 		} else {
        		for (Integer it:ob) {
-       	 	    if (it>midTier.size())
+       	 	    if (it>(midTier.size()+roles.size()))
        	 	    	return false;
        	 	}
 			return true;
@@ -202,12 +202,12 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 						if (req == null)
 							continue;
 						if (req.r.isPurchase) {
-							if (now-req.timeStamp>1850)
+							if (now-req.timeStamp>1900)
 								SL.drop(req.r);
 							else
             	    			SL.processRequest(req.r);
 						} else {
-							if (now-req.timeStamp>850)
+							if (now-req.timeStamp>900)
 								SL.drop(req.r);
 							else
             	    			SL.processRequest(req.r);
@@ -263,25 +263,18 @@ class Schedule implements Runnable {
 			Server.SL.startVM();
 			Server.SL.startVM();
 			Thread.sleep(5000);
-			int countUp = 0;
 			int countDown = 0;
 			boolean lateScaleDown = false;
 			long st = System.currentTimeMillis();
     		while (true) {
-				if (countUp == 3 && (Server.midTier.size()+Server.roles.size())<14) {
-    		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
-					Server.roles.add(temp);
-    		    	Server.SL.startVM();
-					countUp = 0;
-				}
-				if (countDown == 15 && (Server.midTier.size()+Server.roles.size())>2) {
+				if (countDown == 80 && (Server.midTier.size()+Server.roles.size())>2) {
 					Role temp = Server.midTier.remove(0);
     		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
     		        del.closeRole();
 					System.out.println("Role delete"+temp.nameRegistered);
 					countDown = 0;
 				}
-				Thread.sleep(200);
+				Thread.sleep(100);
     		    // scale for browse request VM and purchase request VM
     		    ArrayList<Integer> obUp = new ArrayList<Integer>();
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();
@@ -290,8 +283,14 @@ class Schedule implements Runnable {
 				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
 					lateScaleDown = true; 
     		    if (Server.checkLength(obUp, true)) {
-					countUp++;
-					continue;
+    		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
+					Server.roles.add(temp);
+    		    	Server.SL.startVM();
+					int diff = Server.requests.size()-(Server.roles.size()+Server.midTier.size());
+					for (int i=0; i<diff; i++) {
+						Cloud.FrontEndOps.Request r = Server.requests.poll().r;
+						Server.SL.drop(r);
+					}
     		    } else if (lateScaleDown&&Server.checkLength(obDown, false)){
 					countDown++;
 					continue;
