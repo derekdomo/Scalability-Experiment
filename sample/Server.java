@@ -67,7 +67,6 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     // Method for Master to call to let Slaves to close
     public void closeRole() {
         SL.shutDown();
-		System.out.println("fuck you");
         try {
             UnicastRemoteObject.unexportObject(server, true);
 			server = null;
@@ -162,6 +161,11 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			sch.start();
             SL.register_frontend();
 			System.out.println("Start recieving request");
+			long start = System.currentTimeMillis();
+			while (System.currentTimeMillis()-start<4000) {
+            	Cloud.FrontEndOps.Request r = SL.getNextRequest();
+				SL.drop(r);
+			}
             while (true) {
 				try {
                 	Cloud.FrontEndOps.Request r = SL.getNextRequest();
@@ -201,13 +205,13 @@ public class Server extends UnicastRemoteObject implements ChatServer{
             	    	RequestPack req = frontLeader.getRequest();
 						if (req == null)
 							continue;
-						if (req.r.isPurchase) {
-							if (now-req.timeStamp>1900)
+						if (!req.r.isPurchase) {
+							if (now-req.timeStamp>900)
 								SL.drop(req.r);
 							else
             	    			SL.processRequest(req.r);
 						} else {
-							if (now-req.timeStamp>900)
+							if (now-req.timeStamp>1900)
 								SL.drop(req.r);
 							else
             	    			SL.processRequest(req.r);
