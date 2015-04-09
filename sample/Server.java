@@ -262,7 +262,7 @@ class Schedule implements Runnable {
 		try {
 			Server.SL.startVM();
 			Server.SL.startVM();
-			Thread.sleep(6000);
+			Thread.sleep(5000);
 			int countUp = 0;
 			int countDown = 0;
 			boolean lateScaleDown = false;
@@ -274,7 +274,7 @@ class Schedule implements Runnable {
     		    	Server.SL.startVM();
 					countUp = 0;
 				}
-				if (countDown == 20 && (Server.midTier.size()+Server.roles.size())>2) {
+				if (countDown == 15 && (Server.midTier.size()+Server.roles.size())>2) {
 					Role temp = Server.midTier.remove(0);
     		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
     		        del.closeRole();
@@ -287,19 +287,15 @@ class Schedule implements Runnable {
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();
     		    obDown.add(Server.requests.size());
     		    obUp.add(Server.requests.size());
-				if (!lateScaleDown&&(System.currentTimeMillis()-st)>8000)
+				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
 					lateScaleDown = true; 
     		    if (Server.checkLength(obUp, true)) {
 					countUp++;
-					countDown = 0;
 					continue;
     		    } else if (lateScaleDown&&Server.checkLength(obDown, false)){
 					countDown++;
-					countUp = 0;
 					continue;
 				}
-				countDown=0;
-				countUp=0;
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
