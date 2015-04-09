@@ -34,6 +34,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static LinkedList<Cloud.FrontEndOps.Request> requests= new LinkedList<Cloud.FrontEndOps.Request>();
     public static int threshHoldAvg = 2;
 	public static boolean startNotification = false; 
+	public static Server server;
+	public static boolean flagShutDown = false;
 
  	public void initiateMaster(String ip, int port) {
 		try{
@@ -65,10 +67,11 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public void closeRole() {
         SL.shutDown();
         try {
-            UnicastRemoteObject.unexportObject(this, true);
+            UnicastRemoteObject.unexportObject(server, true);
         } catch(NoSuchObjectException err) {
             err.printStackTrace();
         }
+		flagShutDown = true;
     }
 
     public int getLength() {
@@ -111,13 +114,13 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static boolean checkLength(ArrayList<Integer> ob, boolean up) {
 		if (up) {
        		for (Integer it:ob) {
-       	 	    if (it<midTier.size())
+       	 	    if (it<=midTier.size())
        	 	    	return false;
        	 	}
 			return true;
 		} else {
        		for (Integer it:ob) {
-       	 	    if (it>midTier.size())
+       	 	    if (it>midTier.size()-1)
        	 	    	return false;
        	 	}
 			return true;
@@ -129,7 +132,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         String ip = args[0];
         int port = Integer.parseInt(args[1]);
 
-        ChatServer server = new Server();
+        server = new Server();
 		SL = new ServerLib( ip, port );
 		// register with load balancer so requests are sent to this server
         // Master Node
@@ -195,7 +198,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 					frontLeader = getServerInstance(ip, port, "master");
 				System.out.println("Start Processing request");
 				frontLeader.setFlag();
-            	while (true) {
+            	while (!flagShutDown) {
             	    Cloud.FrontEndOps.Request r = frontLeader.getRequest();
             	    SL.processRequest(r);
 				}
@@ -239,39 +242,32 @@ class Schedule implements Runnable {
 			Thread.sleep(5000);
 			int countUp = 0;
 			int countDown = 0;
+			long st = System.currentTimeMillis();
     		while (true) {
-				if (countUp == 4 && (Server.midTier.size()+Server.roles.size())<14) {
+				if (countUp == 3 && (Server.midTier.size()+Server.roles.size())<14) {
     		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
 					Server.roles.add(temp);
     		    	Server.SL.startVM();
 					countUp = 0;
 				}
-				if (countDown == 10 && (Server.midTier.size()>2)) {
+				if (countDown >= 20 && (Server.midTier.size()>2) && System.currentTimeMillis()-st>10000) {
 					Role temp = Server.midTier.remove(0);
     		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
     		        del.closeRole();
 					countDown = 0;
 				}
-				Thread.sleep(250);
+				Thread.sleep(200);
     		    // scale for browse request VM and purchase request VM
     		    ArrayList<Integer> obUp = new ArrayList<Integer>();
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();
-    		    int acc = 0;
-    		    for (int i=0; i<5; i++) {
-    		        obDown.add(Server.requests.size());
-    		        obUp.add(Server.requests.size());
-    		    }
+    		    obDown.add(Server.requests.size());
+    		    obUp.add(Server.requests.size());
     		    if (Server.checkLength(obUp, true)) {
 					countUp++;
-					countDown = 0;
-					continue;
-    		    } else if (Server.checkLength(obDown, false)){
+    		    }
+				if (Server.checkLength(obDown, false)){
 					countDown++;
-					countUp = 0;
-					continue;
 				}
-				countDown=0;
-				countUp=0;
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
