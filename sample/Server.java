@@ -114,13 +114,13 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static boolean checkLength(ArrayList<Integer> ob, boolean up) {
 		if (up) {
        		for (Integer it:ob) {
-       	 	    if (it<=midTier.size())
+       	 	    if (it<=(midTier.size()+roles.size()))
        	 	    	return false;
        	 	}
 			return true;
 		} else {
        		for (Integer it:ob) {
-       	 	    if (it>midTier.size()-1)
+       	 	    if (it>(midTier.size()+roles.size()-1))
        	 	    	return false;
        	 	}
 			return true;
@@ -244,26 +244,27 @@ class Schedule implements Runnable {
 			int countDown = 0;
 			long st = System.currentTimeMillis();
     		while (true) {
-				if (countUp == 3 && (Server.midTier.size()+Server.roles.size())<14) {
-    		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
-					Server.roles.add(temp);
-    		    	Server.SL.startVM();
-					countUp = 0;
-				}
-				if (countDown >= 20 && (Server.midTier.size()>2) && System.currentTimeMillis()-st>10000) {
+				if (countDown >= 80 && (Server.midTier.size()>2) && System.currentTimeMillis()-st>10000) {
 					Role temp = Server.midTier.remove(0);
     		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
     		        del.closeRole();
 					countDown = 0;
 				}
-				Thread.sleep(200);
+				Thread.sleep(100);
     		    // scale for browse request VM and purchase request VM
     		    ArrayList<Integer> obUp = new ArrayList<Integer>();
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();
     		    obDown.add(Server.requests.size());
     		    obUp.add(Server.requests.size());
     		    if (Server.checkLength(obUp, true)) {
-					countUp++;
+    		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
+					int diff = Server.requests.size()-(Server.roles.size()+Server.midTier.size());
+					for (int i=0; i<diff; i++) {
+						Cloud.FrontEndOps.Request r = Server.requests.poll();
+						Server.SL.drop(r);
+					}
+					Server.roles.add(temp);
+    		    	Server.SL.startVM();
     		    }
 				if (Server.checkLength(obDown, false)){
 					countDown++;
