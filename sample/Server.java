@@ -1,4 +1,3 @@
-/* Sample code for basic Server */
 import java.io.*;
 import java.rmi.Naming;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ interface ChatServer extends Remote{
     public void storeRequest(RequestPack request) throws RemoteException;
     public RequestPack getRequest() throws RemoteException;
 	public void setFlag() throws RemoteException;
+	public Cloud.DatabaseOps getDatabase() throws RemoteException;
 }
 
 public class Server extends UnicastRemoteObject implements ChatServer{ 
@@ -36,6 +36,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public static boolean startNotification = false; 
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
+	public static Cloud.DatabaseOps cache;
 
  	public void initiateMaster(String ip, int port) {
 		try{
@@ -99,7 +100,10 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public RequestPack getRequest() {
     	return requests.poll();
     }
-
+	
+	public Cloud.DatabaseOps getDatabase() {
+		return this.cache;
+	}
 
     // Method for Slaves to get RMI
     public static ChatServer getServerInstance(String ip, int port, String name) {
@@ -111,6 +115,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
             return null;
         }
     }
+	
 
 
     public static boolean checkLength(ArrayList<Integer> ob, boolean up) {
@@ -161,9 +166,11 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			sch.start();
             SL.register_frontend();
 			System.out.println("Start recieving request");
-			long start = System.currentTimeMillis();
-			while (System.currentTimeMillis()-start<4000) {
-            	Cloud.FrontEndOps.Request r = SL.getNextRequest();
+			long st = System.currentTimeMillis();
+			cache = new CacheDatabase(ip, port);
+			while (System.currentTimeMillis()-st<3000) {
+                Cloud.FrontEndOps.Request r = SL.getNextRequest();
+				System.out.println("Front end Drop one");
 				SL.drop(r);
 			}
             while (true) {
@@ -177,50 +184,45 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         // Slave nodes: real workers
         //          1. FrontTier
         //          2. MidTier
+        // For now, slaves can only be mid-tier
         else {
-            // I am a slave
-            // know who I am
+         	// get my role
             ChatServer communicateMaster = null;			
 			while (communicateMaster == null)
 				communicateMaster = getServerInstance(ip, port, "master");
+			cache = communicateMaster.getDatabase();
             role = communicateMaster.getRole();
             server.initiateSlave(ip, port, role);	
-            if (role instanceof RoleFrontTier) {
-                SL.register_frontend();
-				System.out.println("Start recieving request");
-                while (true) {
-                    Cloud.FrontEndOps.Request r = SL.getNextRequest();
-					RequestPack req = new RequestPack(System.currentTimeMillis(), r);
-                    communicateMaster.storeRequest(req);
-                }
-            } else if (role instanceof RoleMidTier) {
-            	ChatServer frontLeader = null; 
-				while (frontLeader == null)
-					frontLeader = getServerInstance(ip, port, "master");
-				System.out.println("Start Processing request");
-				frontLeader.setFlag();
-				try{
-            		while (!flagShutDown) {
-						long now = System.currentTimeMillis();
-            	    	RequestPack req = frontLeader.getRequest();
-						if (req == null)
-							continue;
-						if (!req.r.isPurchase) {
-							if (now-req.timeStamp>900)
-								SL.drop(req.r);
-							else
-            	    			SL.processRequest(req.r);
-						} else {
-							if (now-req.timeStamp>1900)
-								SL.drop(req.r);
-							else
-            	    			SL.processRequest(req.r);
+            ChatServer frontLeader = null; 
+			while (frontLeader == null)
+				frontLeader = getServerInstance(ip, port, "master");
+			System.out.println("Start Processing request");
+			frontLeader.setFlag();
+			try{
+            	while (!flagShutDown) {
+					long now = System.currentTimeMillis();
+                	RequestPack req = frontLeader.getRequest();
+					if (req == null)
+						continue;
+					if (!req.r.isPurchase) {
+						if (now-req.timeStamp>900) {
+							SL.drop(req.r);
+							System.out.println("Impossible to complete it");	
 						}
+						else
+                			SL.processRequest(req.r, cache);
+					} else {
+						if (now-req.timeStamp>1900) {
+							SL.drop(req.r);
+							System.out.println("Impossible to complete it");	
+						}
+						else
+                			SL.processRequest(req.r, cache);
 					}
-				} catch (Exception err){
-					System.out.println(err.getMessage());
 				}
-            }
+			} catch (Exception err){
+				System.out.println(err.getMessage());
+			}
         }
     }
 }
@@ -278,7 +280,7 @@ class Schedule implements Runnable {
 					System.out.println("Role delete"+temp.nameRegistered);
 					countDown = 0;
 				}
-				Thread.sleep(100);
+				Thread.sleep(200);
     		    // scale for browse request VM and purchase request VM
     		    ArrayList<Integer> obUp = new ArrayList<Integer>();
     		    ArrayList<Integer> obDown = new ArrayList<Integer>();
@@ -287,14 +289,14 @@ class Schedule implements Runnable {
 				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
 					lateScaleDown = true; 
     		    if (Server.checkLength(obUp, true)) {
-    		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
-					Server.roles.add(temp);
-    		    	Server.SL.startVM();
 					int diff = Server.requests.size()-(Server.roles.size()+Server.midTier.size());
-					for (int i=0; i<diff; i++) {
+					for (int i=0; i<diff+1; i++) {
 						Cloud.FrontEndOps.Request r = Server.requests.poll().r;
 						Server.SL.drop(r);
 					}
+    		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
+					Server.roles.add(temp);
+    		    	Server.SL.startVM();
     		    } else if (lateScaleDown&&Server.checkLength(obDown, false)){
 					countDown++;
 					continue;

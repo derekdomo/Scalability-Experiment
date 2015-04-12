@@ -1,4 +1,4 @@
-all: Server.class
+all: CacheDatabase.class Server.class
 
 %.class: %.java
 	javac $<
