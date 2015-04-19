@@ -4,9 +4,8 @@ import java.rmi.RemoteException;
 class CacheDatabase implements Cloud.DatabaseOps, Serializable {
 	public HashMap<String, String> cache = new HashMap<String, String>();
 	public Cloud.DatabaseOps db; 
-	public CacheDatabase(String ip, int port) {
-		ServerLib SL = new ServerLib(ip, port);	
-		db = SL.getDB();
+	public CacheDatabase(Cloud.DatabaseOps db) {
+		this.db = db;
 	}
 	public String get(String key) throws RemoteException {
 		if (cache.containsKey(key)) {
