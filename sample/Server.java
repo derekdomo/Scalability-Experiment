@@ -150,7 +150,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			server.initiateMaster(args[0], Integer.parseInt(args[1]));
             int countForFront = 1;
             int countForMid = 2;
-			frontSize = 2;
+			frontSize = 1;
 			midSize = 2;
             // assign countForFront VMs for front tier
             for (int i=0; i<countForFront; i++) {
@@ -213,13 +213,13 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 						if (req == null)
 							continue;
 						if (!req.r.isPurchase) {
-							if (now-req.timeStamp>900) {
+							if (now-req.timeStamp>1000) {
 								SL.drop(req.r);
 							}
 							else
             	    			SL.processRequest(req.r, cache);
 						} else {
-							if (now-req.timeStamp>1900) {
+							if (now-req.timeStamp>2000) {
 								SL.drop(req.r);
 							}
 							else
@@ -271,9 +271,10 @@ class Schedule implements Runnable {
 	}	
 	public boolean checkFrontTier(HashMap<Role, ChatServer> frontServer) throws Exception {
 		int sum = 0;
-		for (ChatServer server:frontServer.values()) {
+        for (Role r : frontServer.keySet()) {
+		//for (ChatServer server:frontServer.values()) {
 			//sum += server.getLength();
-			if (server.getServerLibLength()>0)
+			if (frontServer.get(r).getServerLibLength()>0)
 				return true;
 		}
 		/*
@@ -308,27 +309,28 @@ class Schedule implements Runnable {
 					}
 				}
 				// scale for Front Tier and Mid Tier
-				if (countDownMid == 80 && Server.midSize>2) {
+				if (countDownMid == 100 && Server.midSize>2) {
 					Role temp = Server.midTier.remove(0);
     		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
 					Server.frontSize -= 1;
     		        del.closeRole();
 					countDownMid = 0;
+                    System.out.println("Scale down mid end");
 				}
-				if (countDownFront == 80 && Server.frontSize>1) {
+				if (countDownFront == 10000000 && Server.frontSize>1) {
 					Role temp = Server.frontTier.remove(0);
     		        ChatServer del = frontServer.get(temp);
 					frontServer.remove(temp);
 					Server.frontSize -= 1;
     		        del.closeRole();
 					countDownFront = 0;
+                    System.out.println("Scale down front end");
 				}
 				Thread.sleep(100);
     		    // scale for browse request VM and purchase request VM
-    		    int obMid = Server.requests.size();
 				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
 					lateScaleDown = true; 
-    		    if (checkFrontTier(frontServer)  && Server.frontSize<3) {
+    		    if (checkFrontTier(frontServer)  && Server.frontSize<4) {
 					for (ChatServer server:frontServer.values()) {
 						server.dropHead();
 					}
@@ -336,18 +338,26 @@ class Schedule implements Runnable {
 					Server.frontSize += 1;
 					Server.roles.add(temp);
     		    	Server.SL.startVM();
+                    countDownFront = 0;
     		    } else if (lateScaleDown && !checkFrontTier(frontServer)){
 					countDownFront++;
 				}
+    		    int obMid = Server.requests.size();
     		    if (obMid > Server.midSize && Server.midSize<6) {
 					while ( Server.requests.size() > 1 ) {
 						Cloud.FrontEndOps.Request r = Server.requests.poll().r;
 						Server.SL.drop(r);
 					}
+                    int diff = Server.requests.size() - Server.midSize;
+                    for (int i = 0; i<diff; i++) {
+						Cloud.FrontEndOps.Request r = Server.requests.poll().r;
+						Server.SL.drop(r);
+                    }
     		        Role temp = new RoleMidTier("midEnd"+String.valueOf(curMid++));
 					Server.midSize += 1;
 					Server.roles.add(temp);
     		    	Server.SL.startVM();
+                    countDownMid = 0;
     		    } else if (lateScaleDown && obMid < Server.midSize){
 					countDownMid++;
 				}
