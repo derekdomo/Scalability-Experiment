@@ -5,127 +5,1959 @@ VM 0 Booting
 VM 1 Booting
 VM 1 Running
 VM 0 Running
+Time 128
+client 0 started
+client 0 browse TOPLEVEL
+client 0 ended, status: failed
+Time 247
+client 1 started
+client 1 browse TOPLEVEL
+client 1 ended, status: failed
 VM 2 Booting
 VM 3 Booting
 VM 4 Booting
-VM 5 Booting
-Time 3333
-client 0 started
-client 0 browse TOPLEVEL
+Time 375
+client 2 started
+client 2 browse TOPLEVEL
+client 2 got reply 
+client 2 ended, status: dropped
+Time 493
+client 3 started
+client 3 browse TOPLEVEL
+client 3 got reply 
+client 3 ended, status: dropped
+Time 614
+client 4 started
+client 4 browse TOPLEVEL
+client 4 got reply 
+client 4 ended, status: dropped
+Time 742
+client 5 started
+client 5 browse TOPLEVEL
+client 5 got reply 
+client 5 ended, status: dropped
+Time 856
+client 6 started
+client 6 browse TOPLEVEL
+client 6 got reply 
+client 6 ended, status: dropped
+Time 978
+client 7 started
+client 7 browse TOPLEVEL
+client 7 got reply 
+client 7 ended, status: dropped
+Time 1099
+client 8 started
+client 8 browse TOPLEVEL
+client 8 got reply 
+client 8 ended, status: dropped
+Time 1224
+client 9 started
+client 9 browse TOPLEVEL
+client 9 got reply 
+client 9 ended, status: dropped
+Time 1350
+client 10 started
+client 10 browse TOPLEVEL
+client 10 got reply 
+client 10 ended, status: dropped
+Time 1466
+client 11 started
+client 11 browse TOPLEVEL
+client 11 got reply 
+client 11 ended, status: dropped
+Time 1588
+client 12 started
+client 12 browse TOPLEVEL
+client 12 got reply 
+client 12 ended, status: dropped
+Time 1705
+client 13 started
+client 13 browse TOPLEVEL
+client 13 got reply 
+client 13 ended, status: dropped
+Time 1817
+client 14 started
+client 14 browse TOPLEVEL
+client 14 got reply 
+client 14 ended, status: dropped
+Time 1934
+client 15 started
+client 15 browse TOPLEVEL
+client 15 got reply 
+client 15 ended, status: dropped
+Time 2045
+client 16 started
+client 16 browse TOPLEVEL
+client 16 got reply 
+client 16 ended, status: dropped
+Time 2169
+client 17 started
+client 17 browse TOPLEVEL
+client 17 got reply 
+client 17 ended, status: dropped
+Time 2284
+client 18 started
+client 18 browse TOPLEVEL
+client 18 got reply 
+client 18 ended, status: dropped
+Time 2412
+client 19 started
+client 19 browse TOPLEVEL
+client 19 got reply 
+client 19 ended, status: dropped
+Time 2530
+client 20 started
+client 20 browse TOPLEVEL
+client 20 got reply 
+client 20 ended, status: dropped
+Time 2641
+client 21 started
+client 21 browse TOPLEVEL
+client 21 got reply 
+client 21 ended, status: dropped
+Time 2761
+client 22 started
+client 22 browse TOPLEVEL
+client 22 got reply 
+client 22 ended, status: dropped
+Time 2875
+client 23 started
+client 23 browse TOPLEVEL
+client 23 got reply 
+client 23 ended, status: dropped
+Time 3001
+client 24 started
+client 24 browse TOPLEVEL
+client 24 got reply 
+client 24 ended, status: dropped
+Time 3117
+client 25 started
+client 25 browse TOPLEVEL
+client 25 got reply 
+client 25 ended, status: dropped
+Time 3240
+client 26 started
+client 26 browse TOPLEVEL
+client 26 got reply 
+client 26 ended, status: dropped
+Time 3355
+client 27 started
+client 27 browse TOPLEVEL
+client 27 got reply 
+client 27 ended, status: dropped
+Time 3478
+client 28 started
+client 28 browse TOPLEVEL
+client 28 got reply 
+client 28 ended, status: dropped
+Time 3588
+client 29 started
+client 29 browse TOPLEVEL
+client 29 got reply 
+client 29 ended, status: dropped
+Time 3709
+client 30 started
+client 30 browse TOPLEVEL
+client 30 got reply 
+client 30 ended, status: dropped
+Time 3827
+client 31 started
+client 31 browse TOPLEVEL
+client 31 got reply 
+client 31 ended, status: dropped
+Time 3938
+client 32 started
+client 32 browse TOPLEVEL
+client 32 got reply 
+client 32 ended, status: dropped
+Time 4052
+client 33 started
+client 33 browse TOPLEVEL
+client 33 got reply 
+client 33 ended, status: dropped
+Time 4162
+client 34 started
+client 34 browse TOPLEVEL
+client 34 got reply 
+client 34 ended, status: dropped
+Time 4280
+client 35 started
+client 35 browse TOPLEVEL
+client 35 got reply 
+client 35 ended, status: dropped
+Time 4400
+client 36 started
+client 36 browse TOPLEVEL
+Time 4515
+client 37 started
+client 37 browse TOPLEVEL
+Time 4627
+client 38 started
+client 38 browse TOPLEVEL
+Time 4753
+client 39 started
+client 39 browse TOPLEVEL
+Time 4867
+client 40 started
+client 40 browse TOPLEVEL
+Time 4986
+client 41 started
+client 41 browse TOPLEVEL
+Time 5108
+client 42 started
+client 42 browse TOPLEVEL
+Time 5235
+client 43 started
+client 43 browse TOPLEVEL
 VM 2 Running
 VM 3 Running
 VM 4 Running
+Time 5350
+client 44 started
+client 44 browse TOPLEVEL
+client 36 got reply 
+client 36 ended, status: timeout
+client 37 got reply 
+client 37 ended, status: dropped
+client 38 got reply 
+client 38 ended, status: dropped
+client 39 got reply 
+client 39 ended, status: dropped
+Time 5461
+client 45 started
+client 45 browse TOPLEVEL
+client 40 got reply 
+client 40 ended, status: dropped
+client 41 got reply 
+client 41 ended, status: dropped
+client 42 got reply 
+client 42 ended, status: dropped
+client 43 got reply 
+client 43 ended, status: dropped
+client 44 got reply 
+client 44 ended, status: dropped
+VM 5 Booting
+Time 5580
+client 46 started
+client 46 browse TOPLEVEL
+Time 5692
+client 47 started
+client 47 browse TOPLEVEL
+Time 5809
+client 48 started
+client 48 browse TOPLEVEL
+client 45 got reply Jewelry, Electronics, Office Supplies, Pets
+client 45 ended, status: ok
+Time 5934
+client 49 started
+client 49 browse TOPLEVEL
+client 46 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6051
+client 50 started
+client 50 browse TOPLEVEL
+client 47 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6161
+client 51 started
+client 51 browse TOPLEVEL
+client 48 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6285
+client 52 started
+client 52 browse TOPLEVEL
+client 49 got reply Jewelry, Electronics, Office Supplies, Pets
+client 50 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6405
+client 53 started
+client 53 browse TOPLEVEL
+client 51 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6520
+client 54 started
+client 54 browse TOPLEVEL
+client 52 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6633
+client 55 started
+client 55 browse TOPLEVEL
+client 53 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6760
+client 56 started
+client 56 browse TOPLEVEL
+client 54 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 6884
+client 57 started
+client 57 browse TOPLEVEL
+client 55 got reply Jewelry, Electronics, Office Supplies, Pets
+client 56 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 7010
+client 58 started
+client 58 browse TOPLEVEL
+client 57 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 7139
+client 59 started
+client 59 browse TOPLEVEL
+client 58 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 7266
+client 60 started
+client 60 browse TOPLEVEL
+client 59 got reply Jewelry, Electronics, Office Supplies, Pets
+client 50 browse  Pets
+Time 7380
+client 61 started
+client 61 browse TOPLEVEL
+client 60 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 7509
+client 62 started
+client 62 browse TOPLEVEL
+client 50 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+Time 7638
+client 63 started
+client 63 browse TOPLEVEL
+client 61 got reply Jewelry, Electronics, Office Supplies, Pets
+client 61 ended, status: ok
+Time 7766
+client 64 started
+client 64 browse TOPLEVEL
+client 62 got reply Jewelry, Electronics, Office Supplies, Pets
+client 63 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 7890
+client 65 started
+client 65 browse TOPLEVEL
+client 49 browse  Electronics
+Time 8002
+client 66 started
+client 66 browse TOPLEVEL
+client 47 browse  Pets
+client 64 got reply Jewelry, Electronics, Office Supplies, Pets
+client 54 browse  Pets
+client 65 got reply Jewelry, Electronics, Office Supplies, Pets
+client 51 browse Jewelry
+Time 8125
+client 67 started
+client 67 browse TOPLEVEL
+client 46 browse  Office Supplies
+client 52 browse  Electronics
+Time 8243
+client 68 started
+client 68 browse TOPLEVEL
+client 47 got reply 
+client 47 ended, status: dropped
+client 56 browse  Electronics
+client 49 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 66 got reply Jewelry, Electronics, Office Supplies, Pets
+client 54 got reply 
+client 54 ended, status: dropped
+client 46 got reply 
+client 46 ended, status: dropped
+client 59 browse Jewelry
+client 52 got reply 
+client 52 ended, status: dropped
+client 48 browse Jewelry
+Time 8369
+client 69 started
+client 69 browse TOPLEVEL
+client 68 got reply 
+client 68 ended, status: dropped
+client 57 browse  Office Supplies
+Time 8483
+client 70 started
+client 70 browse TOPLEVEL
+client 56 got reply 
+client 56 ended, status: dropped
+client 67 got reply Jewelry, Electronics, Office Supplies, Pets
+client 51 got reply Ring, Necklace, Earring, Bracelet
+client 59 got reply 
+client 59 ended, status: dropped
+client 57 got reply 
+client 57 ended, status: dropped
+VM 6 Booting
+Time 8601
+client 71 started
+client 71 browse TOPLEVEL
+Time 8722
+client 72 started
+client 72 browse TOPLEVEL
+client 69 got reply Jewelry, Electronics, Office Supplies, Pets
+client 48 got reply Ring, Necklace, Earring, Bracelet
+client 55 browse Jewelry
+Time 8836
+client 73 started
+client 73 browse TOPLEVEL
+client 63 browse  Electronics
+client 53 browse  Office Supplies
+client 70 got reply Jewelry, Electronics, Office Supplies, Pets
+client 71 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 8965
+client 74 started
+client 74 browse TOPLEVEL
+Time 9090
+client 75 started
+client 75 browse TOPLEVEL
+client 58 browse  Pets
+client 72 got reply Jewelry, Electronics, Office Supplies, Pets
+client 55 got reply Ring, Necklace, Earring, Bracelet
+Time 9220
+client 76 started
+client 76 browse TOPLEVEL
+client 49 browse  iPhone
+client 53 got reply 
+client 53 ended, status: dropped
+client 74 got reply 
+client 74 ended, status: dropped
+client 75 got reply 
+client 75 ended, status: dropped
+client 58 got reply 
+client 58 ended, status: dropped
+Time 9332
+client 77 started
+client 77 browse TOPLEVEL
+client 76 got reply 
+client 73 got reply Jewelry, Electronics, Office Supplies, Pets
+client 76 ended, status: dropped
+client 60 browse  Office Supplies
+client 63 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 49 got reply 
+client 49 ended, status: dropped
+VM 7 Booting
+client 62 browse Jewelry
+Time 9446
+client 78 started
+client 78 browse TOPLEVEL
+client 50 browse  stick bug
+client 77 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 9572
+client 79 started
+client 79 browse TOPLEVEL
+client 60 got reply Writing Instruments, Stationary
+Time 9683
+client 80 started
+client 80 browse TOPLEVEL
+client 65 browse  Pets
+client 62 got reply Ring, Necklace, Earring, Bracelet
+client 62 ended, status: ok
+Time 9801
+client 81 started
+client 81 browse TOPLEVEL
+client 51 browse  Necklace
+client 78 got reply Jewelry, Electronics, Office Supplies, Pets
+client 64 browse  Office Supplies
+Time 9930
+client 82 started
+client 82 browse TOPLEVEL
+client 80 got reply 
+client 80 ended, status: dropped
+client 65 got reply 
+client 65 ended, status: dropped
+client 81 got reply 
+client 81 ended, status: dropped
+Time 10049
+client 83 started
+client 83 browse TOPLEVEL
+client 51 got reply 
+client 51 ended, status: dropped
+client 79 got reply Jewelry, Electronics, Office Supplies, Pets
+client 50 got reply ITEM,35.07,4368
+client 50 ended, status: ok
+client 67 browse  Electronics
+client 64 got reply 
+client 64 ended, status: dropped
+VM 8 Booting
+Time 10176
+client 84 started
+client 84 browse TOPLEVEL
+client 66 browse Jewelry
+client 70 browse  Electronics
+client 82 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 10296
+client 85 started
+client 85 browse TOPLEVEL
+client 83 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 10419
+client 86 started
+client 86 browse TOPLEVEL
+client 67 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 84 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 10535
+client 87 started
+client 87 browse TOPLEVEL
 VM 5 Running
-client 0 got reply 
-client 0 ended, status: timeout
-Time 6668
-client 1 started
-client 1 browse TOPLEVEL
-client 1 got reply Jewelry, Electronics, Office Supplies, Pets
-client 1 browse  Office Supplies
-client 1 got reply Writing Instruments, Stationary
-error replying to request -- not found Request{2, Office Supplies}
-Time 10001
-client 2 started
-client 2 browse TOPLEVEL
-client 2 got reply Jewelry, Electronics, Office Supplies, Pets
-client 2 browse  Electronics
-client 1 browse Writing Instruments
-client 2 got reply iPad, iPhone, Android Devices, bluetooth headset
-client 1 got reply pen, No. 2 pencil, typewriter
-Time 13335
-client 3 started
-client 3 browse TOPLEVEL
-client 2 browse  iPhone
-client 1 browse  typewriter
-client 3 got reply Jewelry, Electronics, Office Supplies, Pets
-client 2 got reply ITEM,600.0,10
-client 1 got reply ITEM,150.0,5
-client 3 browse Jewelry
-client 3 got reply Ring, Necklace, Earring, Bracelet
-client 2 purchase  iPhone
-client 1 purchase  typewriter
-client 2 ended, status: purchased
-client 1 ended, status: purchased
-Time 16668
-client 4 started
-client 4 browse TOPLEVEL
-VM 5 Ended
-client 4 got reply Jewelry, Electronics, Office Supplies, Pets
-client 3 browse  Necklace
-client 3 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
-client 4 browse  Pets
-client 4 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
-client 3 browse  Sterling Silver Blue Topaz & Diamond Necklace
-client 3 got reply ITEM,535.97,3792
+client 69 browse  Pets
+client 48 browse  Necklace
+Time 10651
+client 88 started
+client 88 browse TOPLEVEL
+client 66 got reply Ring, Necklace, Earring, Bracelet
+client 70 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 55 browse  Necklace
+Time 10770
+client 89 started
+client 89 browse TOPLEVEL
+client 71 browse  Office Supplies
+client 85 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 10889
+client 90 started
+client 90 browse TOPLEVEL
+client 86 got reply Jewelry, Electronics, Office Supplies, Pets
+client 73 browse Jewelry
+client 63 browse  iPhone
+Time 11016
+client 91 started
+client 91 browse TOPLEVEL
+client 87 got reply Jewelry, Electronics, Office Supplies, Pets
+client 87 ended, status: ok
+client 69 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+Time 11144
+client 92 started
+client 92 browse TOPLEVEL
+client 78 browse  Electronics
+client 48 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+Time 11263
+client 93 started
+client 93 browse TOPLEVEL
+client 88 got reply Jewelry, Electronics, Office Supplies, Pets
+client 83 browse  Pets
+client 72 browse  Pets
+client 55 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+Time 11383
+client 94 started
+client 94 browse TOPLEVEL
+client 89 got reply Jewelry, Electronics, Office Supplies, Pets
+client 77 browse Jewelry
+client 71 got reply Writing Instruments, Stationary
+Time 11507
+client 95 started
+client 95 browse TOPLEVEL
+client 60 browse Writing Instruments
+client 90 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 11631
+client 96 started
+client 96 browse TOPLEVEL
+client 73 got reply Ring, Necklace, Earring, Bracelet
+client 70 browse  iPhone
+Time 11748
+client 97 started
+client 97 browse TOPLEVEL
+client 91 got reply Jewelry, Electronics, Office Supplies, Pets
+client 63 got reply ITEM,600.0,10
+client 63 ended, status: ok
+Time 11867
+client 98 started
+client 98 browse TOPLEVEL
+client 92 got reply Jewelry, Electronics, Office Supplies, Pets
+client 78 got reply iPad, iPhone, Android Devices, bluetooth headset
+Time 11988
+client 99 started
+client 99 browse TOPLEVEL
+client 93 got reply Jewelry, Electronics, Office Supplies, Pets
+client 84 browse Jewelry
+client 69 browse  gerbil
+Time 12112
+client 100 started
+client 100 browse TOPLEVEL
+client 83 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+VM 9 Booting
+client 82 browse  Office Supplies
+client 72 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+Time 12242
+client 101 started
+client 101 browse TOPLEVEL
+client 94 got reply Jewelry, Electronics, Office Supplies, Pets
+client 79 browse  Office Supplies
+client 77 got reply Ring, Necklace, Earring, Bracelet
+client 95 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 12365
+client 102 started
+client 102 browse TOPLEVEL
+Time 12477
+client 103 started
+client 103 browse TOPLEVEL
+client 60 got reply pen, No. 2 pencil, typewriter
+client 96 got reply Jewelry, Electronics, Office Supplies, Pets
+client 66 browse  Necklace
+Time 12589
+client 104 started
+client 104 browse TOPLEVEL
+client 67 browse  iPhone
+client 97 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 12716
+client 105 started
+client 105 browse TOPLEVEL
+client 70 got reply ITEM,600.0,10
+client 70 ended, status: timeout
+client 98 got reply Jewelry, Electronics, Office Supplies, Pets
+client 91 browse Jewelry
+client 86 browse  Office Supplies
+Time 12840
+client 106 started
+client 106 browse TOPLEVEL
+client 88 browse Jewelry
+client 99 got reply Jewelry, Electronics, Office Supplies, Pets
+client 84 got reply Ring, Necklace, Earring, Bracelet
+client 55 browse  Sterling Silver Blue Topaz & Diamond Necklace
+Time 12957
+client 107 started
+client 107 browse TOPLEVEL
+client 73 browse  Necklace
+client 85 browse  Electronics
+Time 13076
+client 108 started
+client 108 browse TOPLEVEL
+client 48 browse  Diamond Leaf Pendant Necklace
+client 100 got reply Jewelry, Electronics, Office Supplies, Pets
+client 69 got reply ITEM,398.56,1651
+client 69 ended, status: timeout
+client 90 browse  Pets
+client 82 got reply Writing Instruments, Stationary
+client 82 ended, status: timeout
+Time 13203
+client 109 started
+client 109 browse TOPLEVEL
+client 101 got reply Jewelry, Electronics, Office Supplies, Pets
+client 101 ended, status: timeout
+Time 13319
+client 110 started
+client 110 browse TOPLEVEL
+client 79 got reply Writing Instruments, Stationary
+client 79 ended, status: timeout
+client 95 browse Jewelry
+client 102 got reply Jewelry, Electronics, Office Supplies, Pets
+client 102 ended, status: timeout
+Time 13432
+client 111 started
+client 111 browse TOPLEVEL
+client 72 browse  snake
+client 103 got reply Jewelry, Electronics, Office Supplies, Pets
+client 103 ended, status: timeout
+client 94 browse  Pets
+Time 13557
+client 112 started
+client 112 browse TOPLEVEL
+client 66 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+VM 6 Running
+client 104 got reply Jewelry, Electronics, Office Supplies, Pets
+client 89 browse  Electronics
+client 93 browse  Office Supplies
+client 71 browse Writing Instruments
+Time 13672
+client 113 started
+client 113 browse TOPLEVEL
+client 67 got reply ITEM,600.0,10
+client 67 ended, status: timeout
+client 86 got reply 
+client 86 ended, status: dropped
+client 83 browse  guinea pig
+client 105 got reply Jewelry, Electronics, Office Supplies, Pets
+client 105 ended, status: timeout
+client 91 got reply Ring, Necklace, Earring, Bracelet
+client 91 ended, status: timeout
+Time 13799
+client 114 started
+client 114 browse TOPLEVEL
+client 84 browse  Necklace
+client 106 got reply Jewelry, Electronics, Office Supplies, Pets
+client 106 ended, status: timeout
+Time 13921
+client 115 started
+client 115 browse TOPLEVEL
+client 107 got reply 
+client 107 ended, status: dropped
+client 73 got reply 
+client 73 ended, status: dropped
+client 77 browse  Necklace
+client 88 got reply Ring, Necklace, Earring, Bracelet
+client 88 ended, status: timeout
+Time 14043
+client 116 started
+client 116 browse TOPLEVEL
+client 92 browse  Electronics
+client 100 browse  Pets
+client 55 got reply ITEM,535.97,3792
+client 55 ended, status: timeout
+client 90 got reply 
+client 90 ended, status: dropped
+client 85 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 85 ended, status: timeout
+client 109 got reply 
+client 109 ended, status: dropped
+Time 14154
+client 117 started
+client 117 browse TOPLEVEL
+client 78 browse  iPhone
+client 108 got reply Jewelry, Electronics, Office Supplies, Pets
+client 108 ended, status: timeout
+Time 14271
+client 118 started
+client 118 browse TOPLEVEL
+client 97 browse  Office Supplies
+client 110 got reply Jewelry, Electronics, Office Supplies, Pets
+client 110 ended, status: timeout
+client 95 got reply Ring, Necklace, Earring, Bracelet
+client 48 got reply ITEM,882.18,1363
+client 48 ended, status: timeout
+Time 14398
+client 119 started
+client 119 browse TOPLEVEL
+client 60 browse  No. 2 pencil
+client 111 got reply Jewelry, Electronics, Office Supplies, Pets
+VM 7 Running
+client 96 browse  Electronics
+Time 14520
+client 120 started
+client 120 browse TOPLEVEL
+client 94 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 94 ended, status: timeout
+client 112 got reply Jewelry, Electronics, Office Supplies, Pets
+client 93 got reply 
+client 93 ended, status: dropped
+Time 14644
+client 121 started
+client 121 browse TOPLEVEL
+client 98 browse  Pets
+client 89 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 89 ended, status: timeout
+client 83 got reply 
+client 83 ended, status: dropped
+client 114 got reply 
+client 114 ended, status: dropped
+client 72 got reply ITEM,155.99,4452
+client 72 ended, status: timeout
+Time 14764
+client 122 started
+client 122 browse TOPLEVEL
+client 113 got reply Jewelry, Electronics, Office Supplies, Pets
+client 113 ended, status: timeout
+client 99 browse Jewelry
+client 71 got reply pen, No. 2 pencil, typewriter
+client 71 ended, status: timeout
+Time 14876
+client 123 started
+client 123 browse TOPLEVEL
+client 115 got reply Jewelry, Electronics, Office Supplies, Pets
+client 115 ended, status: timeout
+client 77 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 77 ended, status: timeout
+client 84 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 84 ended, status: timeout
+Time 15003
+client 124 started
+client 124 browse TOPLEVEL
+client 116 got reply Jewelry, Electronics, Office Supplies, Pets
+client 92 got reply iPad, iPhone, Android Devices, bluetooth headset
+Time 15118
+client 125 started
+client 125 browse TOPLEVEL
+VM 8 Running
+client 117 got reply Jewelry, Electronics, Office Supplies, Pets
+client 117 ended, status: timeout
+client 100 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 100 ended, status: timeout
+client 118 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 15242
+client 126 started
+client 126 browse TOPLEVEL
+client 97 got reply Writing Instruments, Stationary
+client 97 ended, status: timeout
+Time 15362
+client 127 started
+client 127 browse TOPLEVEL
+client 119 got reply Jewelry, Electronics, Office Supplies, Pets
+client 111 browse  Pets
+client 78 got reply ITEM,600.0,10
+client 78 ended, status: timeout
+client 66 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 104 browse  Pets
+Time 15485
+client 128 started
+client 128 browse TOPLEVEL
+client 96 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 96 ended, status: timeout
+client 121 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 15596
+client 129 started
+client 129 browse TOPLEVEL
+client 60 got reply ITEM,0.2,10000
+client 60 ended, status: timeout
+client 120 got reply Jewelry, Electronics, Office Supplies, Pets
+client 120 ended, status: timeout
+client 99 got reply Ring, Necklace, Earring, Bracelet
+client 122 got reply Jewelry, Electronics, Office Supplies, Pets
+client 122 ended, status: ok
+Time 15716
+client 130 started
+client 130 browse TOPLEVEL
+client 98 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 98 ended, status: timeout
+client 123 got reply Jewelry, Electronics, Office Supplies, Pets
+client 124 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 15837
+client 131 started
+client 131 browse TOPLEVEL
+client 112 browse Jewelry
+client 125 got reply Jewelry, Electronics, Office Supplies, Pets
+client 127 got reply Jewelry, Electronics, Office Supplies, Pets
+client 126 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 15948
+client 132 started
+client 132 browse TOPLEVEL
+client 95 browse  Necklace
+client 111 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 66 got reply ITEM,535.97,3792
+client 104 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 128 got reply Jewelry, Electronics, Office Supplies, Pets
+client 128 ended, status: ok
+Time 16065
+client 133 started
+client 133 browse TOPLEVEL
+client 129 got reply Jewelry, Electronics, Office Supplies, Pets
+client 130 got reply Jewelry, Electronics, Office Supplies, Pets
+client 131 got reply Jewelry, Electronics, Office Supplies, Pets
+client 112 got reply Ring, Necklace, Earring, Bracelet
+Time 16183
+client 134 started
+client 134 browse TOPLEVEL
+client 132 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 16312
+client 135 started
+client 135 browse TOPLEVEL
+client 133 got reply Jewelry, Electronics, Office Supplies, Pets
+client 95 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 134 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 16423
+client 136 started
+client 136 browse TOPLEVEL
+client 135 got reply Jewelry, Electronics, Office Supplies, Pets
+client 135 ended, status: ok
+Time 16543
+client 137 started
+client 137 browse TOPLEVEL
+client 136 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 16653
+client 138 started
+client 138 browse TOPLEVEL
+client 119 browse  Pets
+client 137 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 16778
+client 139 started
+client 139 browse TOPLEVEL
+client 118 browse  Office Supplies
+client 138 got reply Jewelry, Electronics, Office Supplies, Pets
+client 125 browse  Office Supplies
+Time 16901
+client 140 started
+client 140 browse TOPLEVEL
+client 116 browse Jewelry
+client 119 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 139 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 17018
+client 141 started
+client 141 browse TOPLEVEL
+client 125 got reply Writing Instruments, Stationary
+client 118 got reply Writing Instruments, Stationary
+client 140 got reply Jewelry, Electronics, Office Supplies, Pets
+client 116 got reply Ring, Necklace, Earring, Bracelet
+client 116 ended, status: ok
+Time 17131
+client 142 started
+client 142 browse TOPLEVEL
+VM 9 Running
+client 141 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 17246
+client 143 started
+client 143 browse TOPLEVEL
+client 92 browse  iPhone
+client 66 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 142 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 17361
+client 144 started
+client 144 browse TOPLEVEL
+client 123 browse Jewelry
+client 124 browse  Electronics
+client 129 browse  Office Supplies
+client 143 got reply Jewelry, Electronics, Office Supplies, Pets
+client 121 browse  Office Supplies
+Time 17482
+client 145 started
+client 145 browse TOPLEVEL
+client 144 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 17597
+client 146 started
+client 146 browse TOPLEVEL
+client 99 browse  Necklace
+client 104 browse  guinea pig
+client 124 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 129 got reply Writing Instruments, Stationary
+client 129 ended, status: ok
+client 134 browse Jewelry
+client 66 ended, status: purchased
+Time 17725
+client 147 started
+client 147 browse TOPLEVEL
+client 137 browse  Pets
+client 131 browse  Electronics
+client 121 got reply Writing Instruments, Stationary
+client 123 got reply Ring, Necklace, Earring, Bracelet
+client 123 ended, status: ok
+client 112 browse  Necklace
+client 145 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 17839
+client 148 started
+client 148 browse TOPLEVEL
+client 146 got reply Jewelry, Electronics, Office Supplies, Pets
+client 111 browse  stick bug
+client 92 got reply ITEM,600.0,10
+client 136 browse  Office Supplies
+client 99 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+Time 17960
+client 149 started
+client 149 browse TOPLEVEL
+client 134 got reply Ring, Necklace, Earring, Bracelet
+client 130 browse Jewelry
+client 147 got reply Jewelry, Electronics, Office Supplies, Pets
+client 131 got reply iPad, iPhone, Android Devices, bluetooth headset
+Time 18080
+client 150 started
+client 150 browse TOPLEVEL
+client 127 browse Jewelry
+client 126 browse  Pets
+client 137 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 112 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 138 browse Jewelry
+client 104 got reply ITEM,204.87,1254
+client 104 ended, status: ok
+client 148 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 18202
+client 151 started
+client 151 browse TOPLEVEL
+client 133 browse  Pets
+client 95 browse  Diamond Leaf Pendant Necklace
+client 111 got reply ITEM,35.07,4368
+client 111 ended, status: ok
+client 119 browse  horse
+client 136 got reply Writing Instruments, Stationary
+client 136 ended, status: ok
+Time 18317
+client 152 started
+client 152 browse TOPLEVEL
+client 149 got reply Jewelry, Electronics, Office Supplies, Pets
+client 142 browse  Electronics
+client 125 browse Writing Instruments
+client 150 got reply Jewelry, Electronics, Office Supplies, Pets
+client 126 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 130 got reply Ring, Necklace, Earring, Bracelet
+client 132 browse  Office Supplies
+Time 18429
+client 153 started
+client 153 browse TOPLEVEL
+client 127 got reply Ring, Necklace, Earring, Bracelet
+client 138 got reply Ring, Necklace, Earring, Bracelet
+client 151 got reply Jewelry, Electronics, Office Supplies, Pets
+client 151 ended, status: ok
+Time 18549
+client 154 started
+client 154 browse TOPLEVEL
+client 133 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 152 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 18668
+client 155 started
+client 155 browse TOPLEVEL
+client 142 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 132 got reply Writing Instruments, Stationary
+client 125 got reply pen, No. 2 pencil, typewriter
+Time 18793
+client 156 started
+client 156 browse TOPLEVEL
+client 153 got reply Jewelry, Electronics, Office Supplies, Pets
+client 139 browse  Electronics
+client 154 got reply Jewelry, Electronics, Office Supplies, Pets
+client 95 got reply ITEM,882.18,1363
+Time 18922
+client 157 started
+client 157 browse TOPLEVEL
+client 124 browse  iPhone
+client 99 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 119 got reply ITEM,9991.67,3889
+client 155 got reply Jewelry, Electronics, Office Supplies, Pets
+client 118 browse Writing Instruments
+client 156 got reply Jewelry, Electronics, Office Supplies, Pets
+client 140 browse  Pets
+client 147 browse  Office Supplies
+Time 19033
+client 158 started
+client 158 browse TOPLEVEL
+client 139 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 157 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 19150
+client 159 started
+client 159 browse TOPLEVEL
+client 148 browse  Pets
+client 118 got reply pen, No. 2 pencil, typewriter
+client 140 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+Time 19265
+client 160 started
+client 160 browse TOPLEVEL
+client 147 got reply Writing Instruments, Stationary
+client 158 got reply Jewelry, Electronics, Office Supplies, Pets
+client 143 browse  Office Supplies
+client 121 browse Writing Instruments
+client 150 browse  Office Supplies
+client 124 got reply ITEM,600.0,10
+client 124 ended, status: ok
+client 159 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 19394
+client 161 started
+client 161 browse TOPLEVEL
+client 148 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 141 browse Jewelry
+client 99 got reply ITEM,535.97,3791
+client 127 browse  Necklace
+client 146 browse  Electronics
+client 144 browse  Pets
+client 160 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 19515
+client 162 started
+client 162 browse TOPLEVEL
+client 143 got reply Writing Instruments, Stationary
+client 134 browse  Necklace
+client 150 got reply Writing Instruments, Stationary
+client 161 got reply Jewelry, Electronics, Office Supplies, Pets
+client 149 browse Jewelry
+client 141 got reply Ring, Necklace, Earring, Bracelet
+client 121 got reply pen, No. 2 pencil, typewriter
+Time 19641
+client 163 started
+client 163 browse TOPLEVEL
+client 127 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 145 browse Jewelry
+client 146 got reply iPad, iPhone, Android Devices, bluetooth headset
+Time 19766
+client 164 started
+client 164 browse TOPLEVEL
+client 144 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 162 got reply Jewelry, Electronics, Office Supplies, Pets
+client 134 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 149 got reply Ring, Necklace, Earring, Bracelet
+client 154 browse  Office Supplies
+Time 19885
+client 165 started
+client 165 browse TOPLEVEL
+client 163 got reply Jewelry, Electronics, Office Supplies, Pets
+client 145 got reply Ring, Necklace, Earring, Bracelet
+client 131 browse  iPhone
+client 126 browse  guinea pig
+client 130 browse  Necklace
+client 164 got reply Jewelry, Electronics, Office Supplies, Pets
+client 164 ended, status: ok
+Time 20014
+client 166 started
+client 166 browse TOPLEVEL
+client 137 browse  mantis
+client 92 purchase  iPhone
+client 165 got reply Jewelry, Electronics, Office Supplies, Pets
+client 154 got reply Writing Instruments, Stationary
+Time 20136
+client 167 started
+client 167 browse TOPLEVEL
+client 130 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 140 browse goldfish
+client 166 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 20264
+client 168 started
+client 168 browse TOPLEVEL
+client 142 browse  iPhone
+client 112 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 132 browse Writing Instruments
+Time 20376
+client 169 started
+client 169 browse TOPLEVEL
+client 167 got reply Jewelry, Electronics, Office Supplies, Pets
+client 157 browse  Electronics
+client 160 browse  Electronics
+Time 20497
+client 170 started
+client 170 browse TOPLEVEL
+client 119 purchase  horse
+client 147 browse Writing Instruments
+client 168 got reply Jewelry, Electronics, Office Supplies, Pets
+client 156 browse Jewelry
+Time 20625
+client 171 started
+client 171 browse TOPLEVEL
+client 141 browse  Necklace
+client 138 browse  Necklace
+client 92 ended, status: purchased
+client 148 browse  ferret
+client 131 got reply ITEM,600.0,9
+client 153 browse  Electronics
+Time 20737
+client 172 started
+client 172 browse TOPLEVEL
+client 133 browse  salamander
+client 137 got reply ITEM,101.94,1032
+client 142 got reply ITEM,600.0,10
+client 162 browse  Pets
+client 152 browse Jewelry
+Time 20850
+client 173 started
+client 173 browse TOPLEVEL
+client 126 got reply ITEM,204.87,1254
+client 121 browse  No. 2 pencil
+client 132 got reply pen, No. 2 pencil, typewriter
+client 145 browse  Necklace
+Time 20969
+client 174 started
+client 174 browse TOPLEVEL
+client 125 browse pen
+client 169 got reply Jewelry, Electronics, Office Supplies, Pets
+client 139 browse  iPhone
+client 159 browse  Pets
+client 157 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 140 got reply ITEM,5.0,0
+client 140 ended, status: ok
+Time 21080
+client 175 started
+client 175 browse TOPLEVEL
+client 95 purchase  Diamond Leaf Pendant Necklace
+client 160 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 118 browse  No. 2 pencil
+client 144 browse  ferret
+client 134 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 149 browse  Necklace
+client 112 got reply ITEM,535.97,3791
+client 112 ended, status: ok
+client 170 got reply Jewelry, Electronics, Office Supplies, Pets
+client 143 browse Writing Instruments
+client 155 browse  Pets
+Time 21197
+client 176 started
+client 176 browse TOPLEVEL
+client 156 got reply Ring, Necklace, Earring, Bracelet
+client 166 browse  Pets
+client 171 got reply Jewelry, Electronics, Office Supplies, Pets
+client 171 ended, status: ok
+client 127 browse  Diamond Leaf Pendant Necklace
+Time 21308
+client 177 started
+client 177 browse TOPLEVEL
+client 99 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 138 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 167 browse Jewelry
+client 119 ended, status: purchased
+Time 21427
+client 178 started
+client 178 browse TOPLEVEL
+client 141 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 147 got reply pen, No. 2 pencil, typewriter
+client 153 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 158 browse  Office Supplies
+client 172 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 21554
+client 179 started
+client 179 browse TOPLEVEL
+client 148 got reply ITEM,189.97,1116
+client 162 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 146 browse  iPhone
+Time 21678
+client 180 started
+client 180 browse TOPLEVEL
+client 152 got reply Ring, Necklace, Earring, Bracelet
+client 152 ended, status: ok
+client 173 got reply Jewelry, Electronics, Office Supplies, Pets
+client 130 browse  Diamond Leaf Pendant Necklace
+client 150 browse Writing Instruments
+Time 21807
+client 181 started
+client 181 browse TOPLEVEL
+client 161 browse  Office Supplies
+client 133 got reply ITEM,166.31,3034
+client 133 ended, status: timeout
+client 174 got reply Jewelry, Electronics, Office Supplies, Pets
+client 139 got reply ITEM,600.0,10
+Time 21932
+client 182 started
+client 182 browse TOPLEVEL
+client 165 browse  Office Supplies
+client 145 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 145 ended, status: timeout
+client 154 browse Writing Instruments
+client 159 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 159 ended, status: timeout
+client 175 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 22059
+client 183 started
+client 183 browse TOPLEVEL
+client 163 browse Jewelry
+client 121 got reply ITEM,0.2,10000
+client 121 ended, status: timeout
+client 149 got reply 
+client 149 ended, status: dropped
+client 170 browse Jewelry
+client 125 got reply ITEM,1.25,1000
+client 125 ended, status: timeout
+client 155 got reply 
+client 155 ended, status: dropped
+client 176 got reply 
+client 176 ended, status: dropped
+Time 22179
+client 184 started
+client 184 browse TOPLEVEL
+client 118 got reply ITEM,0.2,10000
+client 118 ended, status: timeout
+client 127 got reply 
+client 127 ended, status: dropped
+client 132 browse pen
+client 156 browse  Necklace
+client 134 got reply ITEM,535.97,3791
+client 134 ended, status: timeout
+Time 22298
+client 185 started
+client 185 browse TOPLEVEL
+client 143 got reply pen, No. 2 pencil, typewriter
+client 143 ended, status: timeout
+client 167 got reply 
+client 167 ended, status: dropped
+client 131 purchase  iPhone
+client 95 ended, status: purchased
+client 166 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 166 ended, status: timeout
+client 137 purchase  mantis
+client 160 browse  iPhone
+client 177 got reply Jewelry, Electronics, Office Supplies, Pets
+client 177 ended, status: timeout
+Time 22408
+client 186 started
+client 186 browse TOPLEVEL
+client 168 browse  Electronics
+client 153 browse  iPhone
+client 144 got reply ITEM,189.97,1116
+client 144 ended, status: timeout
+client 178 got reply Jewelry, Electronics, Office Supplies, Pets
+client 178 ended, status: timeout
+Time 22530
+client 187 started
+client 187 browse TOPLEVEL
+client 172 browse  Office Supplies
+client 158 got reply Writing Instruments, Stationary
+client 158 ended, status: timeout
+client 179 got reply Jewelry, Electronics, Office Supplies, Pets
+client 179 ended, status: timeout
+client 157 browse  iPhone
+client 146 got reply ITEM,600.0,10
+client 138 browse  Diamond Leaf Pendant Necklace
+Time 22659
+client 188 started
+client 188 browse TOPLEVEL
+client 142 purchase  iPhone
+client 173 browse  Pets
+client 99 ended, status: purchased
+client 180 got reply Jewelry, Electronics, Office Supplies, Pets
+client 180 ended, status: timeout
+client 150 got reply pen, No. 2 pencil, typewriter
+client 181 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 22781
+client 189 started
+client 189 browse TOPLEVEL
+client 126 purchase  guinea pig
+client 147 browse  No. 2 pencil
+client 161 got reply Writing Instruments, Stationary
+client 174 browse Jewelry
+client 130 got reply ITEM,882.18,1362
+client 130 ended, status: timeout
+client 139 purchase  iPhone
+client 182 got reply Jewelry, Electronics, Office Supplies, Pets
+client 165 got reply Writing Instruments, Stationary
+client 165 ended, status: ok
+Time 22905
+client 190 started
+client 190 browse TOPLEVEL
+client 154 got reply pen, No. 2 pencil, typewriter
+client 183 got reply Jewelry, Electronics, Office Supplies, Pets
+client 163 got reply Ring, Necklace, Earring, Bracelet
+Time 23031
+client 191 started
+client 191 browse TOPLEVEL
+client 184 got reply Jewelry, Electronics, Office Supplies, Pets
+client 170 got reply Ring, Necklace, Earring, Bracelet
+Time 23142
+client 192 started
+client 192 browse TOPLEVEL
+client 156 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 185 got reply Jewelry, Electronics, Office Supplies, Pets
+client 169 browse  Office Supplies
+client 148 purchase  ferret
+Time 23261
+client 193 started
+client 193 browse TOPLEVEL
+client 160 got reply ITEM,600.0,9
+client 160 ended, status: ok
+client 141 browse  Diamond Leaf Pendant Necklace
+client 186 got reply Jewelry, Electronics, Office Supplies, Pets
+client 168 got reply iPad, iPhone, Android Devices, bluetooth headset
+Time 23391
+client 194 started
+client 194 browse TOPLEVEL
+client 131 ended, status: purchased
+Time 23515
+client 195 started
+client 195 browse TOPLEVEL
+client 153 got reply ITEM,600.0,9
+client 153 ended, status: timeout
+client 162 browse  stick bug
+client 187 got reply Jewelry, Electronics, Office Supplies, Pets
+client 187 ended, status: timeout
+client 172 got reply Writing Instruments, Stationary
+client 172 ended, status: timeout
+client 137 ended, status: purchased
+client 157 got reply ITEM,600.0,10
+client 157 ended, status: timeout
+Time 23626
+client 196 started
+client 196 browse TOPLEVEL
+client 173 got reply 
+client 173 ended, status: dropped
+client 132 got reply ITEM,1.25,1000
+client 132 ended, status: timeout
+client 138 got reply ITEM,882.18,1362
+client 138 ended, status: timeout
+Time 23743
+client 197 started
+client 197 browse TOPLEVEL
+client 188 got reply Jewelry, Electronics, Office Supplies, Pets
+client 188 ended, status: timeout
+client 189 got reply Jewelry, Electronics, Office Supplies, Pets
+client 189 ended, status: timeout
+client 190 got reply 
+client 190 ended, status: dropped
+Time 23855
+client 198 started
+client 198 browse TOPLEVEL
+client 182 browse  Electronics
+client 174 got reply Ring, Necklace, Earring, Bracelet
+client 174 ended, status: timeout
+Time 23969
+client 199 started
+client 199 browse TOPLEVEL
+client 142 ended, status: purchased
+client 191 got reply Jewelry, Electronics, Office Supplies, Pets
+client 191 ended, status: timeout
+client 181 browse Jewelry
+Time 24089
+client 200 started
+client 200 browse TOPLEVEL
+client 184 browse  Pets
+client 161 browse Writing Instruments
+VM 10 Booting
+client 192 got reply Jewelry, Electronics, Office Supplies, Pets
+client 139 ended, status: purchased
+client 169 got reply Writing Instruments, Stationary
+Time 24212
+client 201 started
+client 201 browse TOPLEVEL
+client 175 browse  Electronics
+client 154 browse  No. 2 pencil
+client 193 got reply Jewelry, Electronics, Office Supplies, Pets
+client 193 ended, status: timeout
+Time 24338
+client 202 started
+client 202 browse TOPLEVEL
+client 186 browse  Electronics
+client 141 got reply ITEM,882.18,1363
+client 194 got reply Jewelry, Electronics, Office Supplies, Pets
+client 141 ended, status: timeout
+client 126 ended, status: purchased
+Time 24459
+client 203 started
+client 203 browse TOPLEVEL
+client 146 purchase  iPhone
+client 195 got reply Jewelry, Electronics, Office Supplies, Pets
+client 195 ended, status: timeout
+client 162 got reply ITEM,35.07,4368
+client 162 ended, status: timeout
+client 196 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 24585
+client 204 started
+client 204 browse TOPLEVEL
+client 163 browse  Necklace
+client 148 ended, status: purchased
+client 197 got reply Jewelry, Electronics, Office Supplies, Pets
+client 150 browse  No. 2 pencil
+Time 24709
+client 205 started
+client 205 browse TOPLEVEL
+client 147 got reply ITEM,0.2,10000
+client 147 ended, status: timeout
+client 198 got reply Jewelry, Electronics, Office Supplies, Pets
+client 182 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 199 got reply Jewelry, Electronics, Office Supplies, Pets
+client 181 got reply Ring, Necklace, Earring, Bracelet
+client 200 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 24832
+client 206 started
+client 206 browse TOPLEVEL
+client 184 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 161 got reply pen, No. 2 pencil, typewriter
+Time 24952
+client 207 started
+client 207 browse TOPLEVEL
+client 168 browse  iPhone
+client 201 got reply Jewelry, Electronics, Office Supplies, Pets
+client 201 ended, status: ok
+client 175 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 170 browse  Necklace
+client 202 got reply Jewelry, Electronics, Office Supplies, Pets
+client 156 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 185 browse Jewelry
+Time 25081
+client 208 started
+client 208 browse TOPLEVEL
+client 192 browse Jewelry
+client 186 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 203 got reply Jewelry, Electronics, Office Supplies, Pets
+client 183 browse  Office Supplies
+client 154 got reply ITEM,0.2,10000
+client 154 ended, status: ok
+client 204 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 25205
+client 209 started
+client 209 browse TOPLEVEL
+client 163 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+Time 25317
+client 210 started
+client 210 browse TOPLEVEL
+client 150 got reply ITEM,0.2,10000
+client 205 got reply Jewelry, Electronics, Office Supplies, Pets
+client 146 ended, status: purchased
+client 206 got reply Jewelry, Electronics, Office Supplies, Pets
+client 207 got reply Jewelry, Electronics, Office Supplies, Pets
+client 207 ended, status: ok
+client 168 got reply ITEM,600.0,10
+Time 25444
+client 211 started
+client 211 browse TOPLEVEL
+client 170 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+Time 25559
+client 212 started
+client 212 browse TOPLEVEL
+client 185 got reply Ring, Necklace, Earring, Bracelet
+client 208 got reply Jewelry, Electronics, Office Supplies, Pets
+client 192 got reply Ring, Necklace, Earring, Bracelet
+client 197 browse  Electronics
+client 183 got reply Writing Instruments, Stationary
+Time 25672
+client 213 started
+client 213 browse TOPLEVEL
+client 156 got reply ITEM,535.97,3790
+client 209 got reply Jewelry, Electronics, Office Supplies, Pets
+client 169 browse Writing Instruments
+client 210 got reply Jewelry, Electronics, Office Supplies, Pets
+client 211 got reply Jewelry, Electronics, Office Supplies, Pets
+client 212 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 25785
+client 214 started
+client 214 browse TOPLEVEL
+client 181 browse  Necklace
+client 197 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 213 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 25899
+client 215 started
+client 215 browse TOPLEVEL
+client 194 browse  Office Supplies
+client 214 got reply Jewelry, Electronics, Office Supplies, Pets
+client 214 ended, status: ok
+Time 26024
+client 216 started
+client 216 browse TOPLEVEL
+client 169 got reply pen, No. 2 pencil, typewriter
+client 198 browse  Office Supplies
+client 181 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 182 browse  iPhone
+client 215 got reply Jewelry, Electronics, Office Supplies, Pets
+client 186 browse  iPhone
+Time 26147
+client 217 started
+client 217 browse TOPLEVEL
+client 196 browse Jewelry
+client 194 got reply Writing Instruments, Stationary
+client 184 browse  snake
+client 216 got reply Jewelry, Electronics, Office Supplies, Pets
+client 198 got reply Writing Instruments, Stationary
+Time 26273
+client 218 started
+client 218 browse TOPLEVEL
+client 182 got reply ITEM,600.0,10
+client 186 got reply ITEM,600.0,10
+client 217 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 26385
+client 219 started
+client 219 browse TOPLEVEL
+client 196 got reply Ring, Necklace, Earring, Bracelet
+client 218 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 26499
+client 220 started
+client 220 browse TOPLEVEL
+client 175 browse  iPhone
+client 184 got reply ITEM,155.99,4452
+client 219 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 26616
+client 221 started
+client 221 browse TOPLEVEL
+client 199 browse  Pets
+client 220 got reply Jewelry, Electronics, Office Supplies, Pets
+client 200 browse Jewelry
+Time 26744
+client 222 started
+client 222 browse TOPLEVEL
+client 175 got reply ITEM,600.0,10
+client 221 got reply Jewelry, Electronics, Office Supplies, Pets
+client 221 ended, status: ok
+client 163 browse  Diamond Leaf Pendant Necklace
+client 161 browse pen
+Time 26872
+client 223 started
+client 223 browse TOPLEVEL
+client 199 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 208 browse Jewelry
+client 192 browse  Necklace
+client 202 browse  Office Supplies
+client 200 got reply Ring, Necklace, Earring, Bracelet
+client 183 browse Writing Instruments
+client 205 browse  Electronics
+client 222 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 26992
+client 224 started
+client 224 browse TOPLEVEL
+client 169 browse  No. 2 pencil
+client 168 purchase  iPhone
+client 203 browse  Pets
+client 163 got reply ITEM,882.18,1362
+client 161 got reply ITEM,1.25,1000
+client 161 ended, status: ok
+client 204 browse Jewelry
+client 208 got reply Ring, Necklace, Earring, Bracelet
+client 208 ended, status: ok
+client 223 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 27112
+client 225 started
+client 225 browse TOPLEVEL
+client 197 browse  iPhone
+client 202 got reply Writing Instruments, Stationary
+client 202 ended, status: ok
+client 192 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 185 browse  Necklace
+Time 27227
+client 226 started
+client 226 browse TOPLEVEL
+client 150 purchase  No. 2 pencil
+client 183 got reply pen, No. 2 pencil, typewriter
+client 205 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 206 browse  Office Supplies
+client 156 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 182 purchase  iPhone
+client 224 got reply Jewelry, Electronics, Office Supplies, Pets
+client 186 purchase  iPhone
+client 181 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 203 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+Time 27354
+client 227 started
+client 227 browse TOPLEVEL
+client 215 browse Jewelry
+client 170 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 204 got reply Ring, Necklace, Earring, Bracelet
+client 225 got reply Jewelry, Electronics, Office Supplies, Pets
+Time 27467
+client 228 started
+client 228 browse TOPLEVEL
+client 185 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 216 browse  Electronics
+client 198 browse Writing Instruments
+client 197 got reply ITEM,600.0,10
+client 219 browse Jewelry
+Time 27591
+client 229 started
+client 229 browse TOPLEVEL
+client 168 ended, status: purchased
+client 226 got reply Jewelry, Electronics, Office Supplies, Pets
+client 169 got reply ITEM,0.2,10000
+client 210 browse  Pets
+Time 27708
+client 230 started
+client 230 browse TOPLEVEL
+client 206 got reply Writing Instruments, Stationary
+client 194 browse Writing Instruments
+client 218 browse  Pets
+client 213 browse  Office Supplies
+Time 27823
+client 231 started
+client 231 browse TOPLEVEL
+client 150 ended, status: purchased
+client 227 got reply Jewelry, Electronics, Office Supplies, Pets
+client 227 ended, status: ok
+client 209 browse  Electronics
+Time 27935
+client 232 started
+client 232 browse TOPLEVEL
+client 211 browse Jewelry
+client 212 browse  Electronics
+client 182 ended, status: purchased
+client 170 got reply ITEM,535.97,3790
+client 215 got reply Ring, Necklace, Earring, Bracelet
+client 215 ended, status: ok
+Time 28065
+client 233 started
+client 233 browse TOPLEVEL
+client 192 browse  Sterling Silver Blue Topaz & Diamond Necklace
+Time 28181
+client 234 started
+client 234 browse TOPLEVEL
+client 186 ended, status: purchased
+client 216 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 228 got reply Jewelry, Electronics, Office Supplies, Pets
+client 219 got reply Ring, Necklace, Earring, Bracelet
+client 217 browse  Office Supplies
+client 196 browse  Necklace
+Time 28294
+client 235 started
+client 235 browse TOPLEVEL
+Time 28411
+client 236 started
+client 236 browse TOPLEVEL
+client 156 ended, status: purchased
+client 198 got reply pen, No. 2 pencil, typewriter
+client 210 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 229 got reply Jewelry, Electronics, Office Supplies, Pets
+client 194 got reply pen, No. 2 pencil, typewriter
+client 199 browse  ant farm
+client 184 purchase  snake
+client 205 browse  iPhone
+Time 28535
+client 237 started
+client 237 browse TOPLEVEL
+client 222 browse Jewelry
+client 224 browse  Office Supplies
+client 181 got reply ITEM,535.97,3789
+client 181 ended, status: timeout
+client 220 browse  Office Supplies
+Time 28646
+client 238 started
+client 238 browse TOPLEVEL
+client 230 got reply Jewelry, Electronics, Office Supplies, Pets
+client 218 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 213 got reply Writing Instruments, Stationary
+client 231 got reply Jewelry, Electronics, Office Supplies, Pets
+client 209 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 203 browse  ferret
+client 175 purchase  iPhone
+client 223 browse  Electronics
+client 206 browse Writing Instruments
+Time 28773
+client 239 started
+client 239 browse TOPLEVEL
+client 185 browse  Diamond Leaf Pendant Necklace
+client 232 got reply Jewelry, Electronics, Office Supplies, Pets
+client 200 browse  Necklace
+client 183 browse pen
+client 212 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 211 got reply Ring, Necklace, Earring, Bracelet
+client 233 got reply Jewelry, Electronics, Office Supplies, Pets
+client 234 got reply Jewelry, Electronics, Office Supplies, Pets
+client 234 ended, status: ok
+client 192 got reply ITEM,535.97,3790
+Time 28889
+client 240 started
+client 240 browse TOPLEVEL
+client 163 purchase  Diamond Leaf Pendant Necklace
+client 217 got reply Writing Instruments, Stationary
+Time 29001
+client 241 started
+client 241 browse TOPLEVEL
+client 204 browse  Necklace
+client 225 browse  Pets
+client 196 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 236 got reply Jewelry, Electronics, Office Supplies, Pets
+client 235 got reply Jewelry, Electronics, Office Supplies, Pets
+VM 10 Running
+Time 29121
+client 242 started
+client 242 browse TOPLEVEL
+client 205 got reply ITEM,600.0,10
+Time 29238
+client 243 started
+client 243 browse TOPLEVEL
+client 219 browse  Necklace
+client 237 got reply Jewelry, Electronics, Office Supplies, Pets
+client 222 got reply Ring, Necklace, Earring, Bracelet
+client 222 ended, status: ok
+client 224 got reply Writing Instruments, Stationary
+client 184 ended, status: purchased
+client 170 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+Time 29359
+client 238 got reply Jewelry, Electronics, Office Supplies, Pets
+client 199 got reply ITEM,223.17,2776
+client 220 got reply Writing Instruments, Stationary
+client 203 got reply ITEM,189.97,1116
+client 197 purchase  iPhone
+client 206 got reply pen, No. 2 pencil, typewriter
+client 169 purchase  No. 2 pencil
+client 223 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 185 got reply ITEM,882.18,1362
+client 239 got reply Jewelry, Electronics, Office Supplies, Pets
+client 183 got reply ITEM,1.25,1000
+client 175 ended, status: purchased
+client 200 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 198 browse  No. 2 pencil
+client 240 got reply Jewelry, Electronics, Office Supplies, Pets
+client 226 browse Jewelry
+client 241 got reply Jewelry, Electronics, Office Supplies, Pets
+client 204 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 225 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 242 got reply Jewelry, Electronics, Office Supplies, Pets
+client 209 browse  iPhone
+client 217 browse Writing Instruments
+client 163 ended, status: purchased
+client 243 got reply Jewelry, Electronics, Office Supplies, Pets
+client 229 browse  Pets
+client 194 browse  typewriter
+client 236 browse  Pets
+client 219 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 216 browse  iPhone
+client 228 browse  Office Supplies
+client 212 browse  iPhone
+client 233 browse Jewelry
+client 198 got reply ITEM,0.2,10000
+client 226 got reply Ring, Necklace, Earring, Bracelet
+client 209 got reply ITEM,600.0,10
+client 209 ended, status: ok
+client 170 ended, status: purchased
+client 217 got reply pen, No. 2 pencil, typewriter
+client 229 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 211 browse  Necklace
+client 192 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 169 ended, status: purchased
+client 236 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 231 browse  Office Supplies
+client 216 got reply ITEM,600.0,10
+client 216 ended, status: ok
+client 228 got reply Writing Instruments, Stationary
+client 228 ended, status: ok
+client 210 browse  salamander
+client 235 browse  Office Supplies
+client 197 ended, status: purchased
+client 212 got reply ITEM,600.0,10
+client 233 got reply Ring, Necklace, Earring, Bracelet
+client 232 browse  Pets
+client 203 purchase  ferret
+client 206 browse  No. 2 pencil
+client 194 got reply ITEM,150.0,5
+client 211 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 230 browse  Electronics
+client 218 browse  cat
+client 213 browse Writing Instruments
+client 224 browse Writing Instruments
+client 231 got reply Writing Instruments, Stationary
+client 235 got reply Writing Instruments, Stationary
+client 235 ended, status: ok
+VM 11 Booting
+client 196 browse  Diamond Leaf Pendant Necklace
+client 199 purchase  ant farm
+client 232 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 192 ended, status: purchased
+client 206 got reply ITEM,0.2,10000
+client 205 purchase  iPhone
+client 237 browse Jewelry
+client 204 browse  Diamond Leaf Pendant Necklace
 VM 3 Ended
-Time 20002
-client 5 started
-client 5 browse TOPLEVEL
-client 5 got reply Jewelry, Electronics, Office Supplies, Pets
-client 4 browse  frog
-client 4 got reply ITEM,200.28,2054
-client 3 purchase  Sterling Silver Blue Topaz & Diamond Necklace
-client 4 purchase  frog
-client 3 ended, status: purchased
-client 4 ended, status: purchased
-client 5 browse  Office Supplies
-client 5 got reply Writing Instruments, Stationary
-Time 23335
-client 6 started
-client 6 browse TOPLEVEL
-client 5 browse Writing Instruments
-client 6 got reply Jewelry, Electronics, Office Supplies, Pets
-client 5 got reply pen, No. 2 pencil, typewriter
-client 5 browse pen
-client 5 got reply ITEM,1.25,1000
-client 5 ended, status: ok
-client 6 browse  Electronics
-client 6 got reply iPad, iPhone, Android Devices, bluetooth headset
-Time 26669
-client 7 started
-client 7 browse TOPLEVEL
-client 7 got reply Jewelry, Electronics, Office Supplies, Pets
-client 6 browse  iPhone
-client 6 got reply ITEM,600.0,9
-client 6 ended, status: ok
-client 7 browse Jewelry
-client 7 got reply Ring, Necklace, Earring, Bracelet
-client 7 browse  Necklace
-client 7 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
-client 7 browse  Diamond Leaf Pendant Necklace
-client 7 got reply ITEM,882.18,1363
-client 7 purchase  Diamond Leaf Pendant Necklace
-client 7 ended, status: purchased
-END
-Stats: {purchased=5, ok=2, timeout=1}
-Total sales: 2368.43
-Total erroneous sales: 0.0
+client 223 browse  iPhone
+client 185 purchase  Diamond Leaf Pendant Necklace
+client 242 browse  Office Supplies
+client 230 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 183 purchase pen
+client 213 got reply pen, No. 2 pencil, typewriter
+client 203 ended, status: purchased
+client 238 browse  Electronics
+client 243 browse  Pets
+client 220 browse Writing Instruments
+client 224 got reply pen, No. 2 pencil, typewriter
+client 241 browse  Electronics
+client 236 browse  gerbil
+client 196 got reply ITEM,882.18,1363
+client 196 ended, status: ok
+client 210 got reply ITEM,166.31,3034
+client 198 purchase  No. 2 pencil
+client 218 got reply ITEM,42.01,868
+client 239 browse  Office Supplies
+client 200 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 237 got reply Ring, Necklace, Earring, Bracelet
+client 204 got reply ITEM,882.18,1363
+client 240 browse Jewelry
+client 199 ended, status: purchased
+client 223 got reply ITEM,600.0,9
+client 223 ended, status: ok
+client 225 browse  mantis
+client 205 ended, status: ok
+client 242 got reply Writing Instruments, Stationary
+client 238 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 219 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 217 browse  No. 2 pencil
+client 185 ended, status: purchased
+client 243 got reply goldfish, alpaca, ant farm, bird, cat, dog, ferret, fish, frog, gecko, gerbil, goat, guinea pig, hamster, hedgehog, hermit crab, horse, iguana, mantis, mouse, newt, pig, rabbit, rat, salamander, sheep, snake, spider, stick bug, turtle
+client 220 got reply pen, No. 2 pencil, typewriter
+client 241 got reply iPad, iPhone, Android Devices, bluetooth headset
+client 212 purchase  iPhone
+client 233 browse  Necklace
+client 213 browse  typewriter
+client 183 ended, status: purchased
+client 239 got reply Writing Instruments, Stationary
+client 232 browse  ferret
+client 200 got reply ITEM,535.97,3790
+client 206 purchase  No. 2 pencil
+client 226 browse  Necklace
+client 231 browse Writing Instruments
+client 240 got reply Ring, Necklace, Earring, Bracelet
+client 198 ended, status: purchased
+client 219 got reply ITEM,535.97,3790
+client 229 browse  cat
+client 217 got reply ITEM,0.2,10000
+client 217 ended, status: ok
+client 236 got reply ITEM,398.56,1651
+client 236 ended, status: timeout
+client 233 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 225 got reply ITEM,101.94,1031
+client 225 ended, status: timeout
+client 212 ended, status: ok
+client 226 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 194 purchase  typewriter
+client 211 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 243 browse  gerbil
+client 230 browse  iPhone
+client 241 browse  iPhone
+client 231 got reply pen, No. 2 pencil, typewriter
+client 206 ended, status: purchased
+client 238 browse  iPhone
+client 239 browse Writing Instruments
+client 224 browse  typewriter
+client 210 purchase  salamander
+client 220 browse pen
+client 211 got reply ITEM,535.97,3790
+client 218 purchase  cat
+client 229 got reply ITEM,42.01,868
+client 229 ended, status: ok
+client 200 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 194 ended, status: purchased
+client 230 got reply ITEM,600.0,10
+client 213 got reply ITEM,150.0,4
+client 213 ended, status: timeout
+client 242 browse Writing Instruments
+client 232 got reply ITEM,189.97,1114
+client 232 ended, status: timeout
+client 237 browse  Necklace
+client 204 purchase  Diamond Leaf Pendant Necklace
+client 241 got reply ITEM,600.0,10
+client 238 got reply ITEM,600.0,10
+client 243 got reply ITEM,398.56,1651
+client 239 got reply pen, No. 2 pencil, typewriter
+client 240 browse  Necklace
+client 210 ended, status: purchased
+client 219 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 226 browse  Diamond Leaf Pendant Necklace
+client 242 got reply pen, No. 2 pencil, typewriter
+client 233 browse  Sterling Silver Blue Topaz & Diamond Necklace
+client 200 ended, status: purchased
+client 231 browse  No. 2 pencil
+client 237 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 218 ended, status: purchased
+client 224 got reply ITEM,150.0,4
+client 224 ended, status: timeout
+client 240 got reply Teardrop London Blue Topaz Necklace, Sterling Silver Blue Topaz & Diamond Necklace, Sky Blue Topaz & Diamond Necklace, Faceted Heart Shaped Blue Topaz Necklace, Aquamarine Pendant Necklace, Diamond Leaf Pendant Necklace, Diamond Heart Necklace, Freshwater Pearl Necklace
+client 204 ended, status: purchased
+client 226 got reply ITEM,882.18,1363
+client 220 got reply ITEM,1.25,999
+client 220 ended, status: timeout
+client 241 purchase  iPhone
+client 233 got reply ITEM,535.97,3789
+client 243 purchase  gerbil
+client 230 purchase  iPhone
+client 231 got reply ITEM,0.2,10000
+client 219 ended, status: purchased
+client 241 ended, status: ok
+client 211 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 230 ended, status: ok
+client 238 purchase  iPhone
+client 243 ended, status: purchased
+VM 11 Running
+client 211 ended, status: purchased
+client 237 browse  Diamond Leaf Pendant Necklace
+client 239 browse  typewriter
+VM 12 Booting
+client 233 purchase  Sterling Silver Blue Topaz & Diamond Necklace
+client 238 ended, status: ok
+client 237 got reply ITEM,882.18,1363
+client 239 got reply ITEM,150.0,4
+client 242 browse  No. 2 pencil
+client 233 ended, status: purchased
+client 226 purchase  Diamond Leaf Pendant Necklace
+client 242 got reply ITEM,0.2,10000
+client 226 ended, status: purchased
+client 240 browse  Diamond Leaf Pendant Necklace
+client 231 purchase  No. 2 pencil
+client 240 got reply ITEM,882.18,1358
+client 240 ended, status: ok
+client 231 ended, status: purchased
+client 237 purchase  Diamond Leaf Pendant Necklace
+client 239 purchase  typewriter
+client 242 purchase  No. 2 pencil
+client 237 ended, status: purchased
+client 239 ended, status: purchased
+client 242 ended, status: purchased
+VM 2 Ended
+VM 12 Running
+VM 5 Ended
+VM 6 Ended
+VM 7 Ended
 VM 0 Ended
 VM 1 Ended
-VM 2 Ended
 VM 4 Ended
+VM 8 Ended
+VM 9 Ended
+VM 10 Ended
+VM 11 Ended
+VM 12 Ended
 VM 0 Output ----------------
 VM 1 Output ----------------
 Start recieving request
-Role deletemidEnd0
-Role deletemidEnd1
 VM 2 Output ----------------
-Instance added
-Start Processing request
+Mid Tier
 VM 3 Output ----------------
-Instance added
-Start Processing request
-fuck you
+Mid Tier
 VM 4 Output ----------------
-Instance added
-Start Processing request
+Front Tier
+VM 5 Output ----------------
+Mid Tier
+VM 6 Output ----------------
+Mid Tier
+VM 7 Output ----------------
+Mid Tier
+VM 8 Output ----------------
+Mid Tier
 Error unmarshaling return header; nested exception is: 
 	java.io.EOFException
-VM 5 Output ----------------
-Instance added
-Start Processing request
-fuck you
+VM 9 Output ----------------
+Front Tier
+VM 10 Output ----------------
+Exception in thread "main" java.lang.OutOfMemoryError: unable to create new native thread
+	at java.lang.Thread.start0(Native Method)
+	at java.lang.Thread.start(Thread.java:714)
+	at java.util.concurrent.ThreadPoolExecutor.addWorker(ThreadPoolExecutor.java:950)
+	at java.util.concurrent.ThreadPoolExecutor.ensurePrestart(ThreadPoolExecutor.java:1587)
+	at java.util.concurrent.ScheduledThreadPoolExecutor.delayedExecute(ScheduledThreadPoolExecutor.java:334)
+	at java.util.concurrent.ScheduledThreadPoolExecutor.scheduleWithFixedDelay(ScheduledThreadPoolExecutor.java:597)
+	at sun.rmi.transport.tcp.TCPChannel.free(TCPChannel.java:347)
+	at sun.rmi.server.UnicastRef.free(UnicastRef.java:431)
+	at sun.rmi.server.UnicastRef.done(UnicastRef.java:448)
+	at sun.rmi.registry.RegistryImpl_Stub.lookup(Unknown Source)
+	at java.rmi.Naming.lookup(Naming.java:101)
+	at ServerLib.<init>(ServerLib.java:68)
+	at Server.main(Server.java:141)
+VM 11 Output ----------------
+Front Tier
+VM 12 Output ----------------
+Front Tier
 --------------------------
-Total VM time: 172460
+Total VM time: 674444
 Cloud shutdown
