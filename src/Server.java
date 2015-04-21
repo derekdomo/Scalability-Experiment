@@ -362,7 +362,7 @@ class Schedule implements Runnable {
     public void scaleOutFront(int num) {
         System.out.print("Front Tier Scaled to\t"+num+"\t");
         System.out.println(System.currentTimeMillis()-Server.adam);
-        for (int i=0; i<num && Server.midSize < 10; i++) {
+        for (int i=0; i<num && Server.frontSize < 4; i++) {
             Role temp = new RoleFrontTier("midEnd"+String.valueOf(Server.frontSize++));
             Server.roles.add(temp);
             Server.SL.startVM();
