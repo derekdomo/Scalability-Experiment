@@ -17,7 +17,7 @@ interface ChatServer extends Remote{
     public void storeRequest(RequestPack request) throws RemoteException;
     public RequestPack getRequest() throws RemoteException;
 	public Cloud.DatabaseOps getDatabase() throws RemoteException;
-	public int getServerLibLength() throws RemoteException;
+	public int getRPS() throws RemoteException;
 }
 
 public class Server extends UnicastRemoteObject implements ChatServer{ 
@@ -36,6 +36,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public static int frontSize;
 	public static int midSize;
 	public static long adam;
+	public static int rps;
 
     /*
     * RMI for Master
@@ -61,10 +62,11 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         flagShutDown = true;
     }
     // Method for Master to check Front Tier queue length
-    public int getServerLibLength() {
-        return SL.getQueueLength();
+    public int getRPS() {
+		int ret = rps;
+		rps = 0;
+        return ret;
     }
-
 
     /*
     * RMI for Slave
@@ -138,6 +140,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         if (r == null)
             return true;
         try {
+			rps+=1;
             RequestPack req = new RequestPack(System.currentTimeMillis(), r);
             master.storeRequest(req);}
         catch(Exception err){}
@@ -146,7 +149,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public static boolean processRequest(RequestPack req) {
         long now = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (now-req.timeStamp>780) {
+            if (now-req.timeStamp>750) {
+				System.out.println("Dropped\t"+(now-req.timeStamp));
                 SL.drop(req.r);
             }
             else
@@ -326,11 +330,11 @@ class Schedule implements Runnable {
                     }
 					// Mid Tier
                     if (System.currentTimeMillis() - st_mid_cool_down > coolDown) {
-                        int numToOpen = avgFrontLenUp/5/Server.midSize/3-Server.midSize;
+                        int numToOpen =(int) (Math.ceil((double)avgMidLenUp/5.0/(double)Server.midSize/3.0))-Server.midSize;
 						if (numToOpen > 0) {
         					System.out.println("Current Mid Tier\t"+Server.midSize);
 							System.out.println("Average Length\t"+avgMidLenUp/5);
-							scaleOutMid(numToOpen);
+							scaleOutMid(numToOpen*2);
 							st_mid_cool_down = System.currentTimeMillis();
 						}
 						// Drop extra requests
@@ -339,7 +343,7 @@ class Schedule implements Runnable {
 					avgMidLenUp = 0;
                     avgFrontLenUp = 0;
 				}
-				Thread.sleep(100);
+				Thread.sleep(250);
     		    // Cold scale down for 10 seconds
 				if (!lateScaleDown &&
                         (System.currentTimeMillis()-st_cold_start)>10000)
@@ -389,7 +393,9 @@ class Schedule implements Runnable {
     public int checkFrontTier(HashMap<Role, ChatServer> frontServer) throws Exception {
         int sum = 0;
         for (ChatServer server:frontServer.values())
-            sum += server.getServerLibLength();
-        return sum+Server.SL.getQueueLength();
+            sum += server.getRPS();
+        sum += Server.rps;
+		Server.rps=0;
+		return sum;
     }
 }
