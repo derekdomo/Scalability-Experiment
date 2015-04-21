@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingDeque;
 
 interface ChatServer extends Remote{
@@ -29,7 +30,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static ArrayList<Role> midTier= new ArrayList<Role>();
     public static ServerLib SL;
     public static Role role;
-    public static LinkedBlockingDeque<RequestPack> requests= new LinkedBlockingDeque<RequestPack>();
+    public static LinkedList<RequestPack> requests= new LinkedList<RequestPack>();
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
 	public static Cloud.DatabaseOps cache;
@@ -148,15 +149,15 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     }
 	public static boolean processRequest(RequestPack req) {
         long now = System.currentTimeMillis();
+		System.out.println(role.nameRegistered);
         if (!req.r.isPurchase) {
-            if (now-req.timeStamp>750) {
-				System.out.println("Dropped\t"+(now-req.timeStamp));
+            if (now-req.timeStamp>795) {
                 SL.drop(req.r);
             }
             else
                 SL.processRequest(req.r, cache);
         } else {
-            if (now-req.timeStamp>1500) {
+            if (now-req.timeStamp>795) {
                 SL.drop(req.r);
             }
             else
@@ -204,7 +205,9 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			cache = new CacheDatabase(SL.getDB());
             // Drop the first 5 seconds' requests because of no VM can be started
 			while (System.currentTimeMillis()-st<5000) {
-				SL.dropHead();
+				rps ++;
+				Cloud.FrontEndOps.Request r = SL.getNextRequest();
+				SL.drop(r);
 			}
             while (addRequest(SL.getNextRequest())) {
                 continue;
@@ -284,10 +287,9 @@ class Schedule implements Runnable {
 			Server.SL.startVM();
 			Server.SL.startVM();
 			HashMap<Role, ChatServer> frontServer = new HashMap<Role, ChatServer>();
-			Thread.sleep(5000);
 			int RPS = 0;
 			//int countDownFront = 0;
-			int countUp = 0;
+			int countDown = 0;
 			int coolDown = 10000;
 			boolean lateScaleDown = false;
 			long st_cold_start = System.currentTimeMillis();
@@ -295,15 +297,19 @@ class Schedule implements Runnable {
             long st_front_cool_down = 0;
     		while (checkRMIForFront(frontServer)) {
                 RPS = checkFrontTier(frontServer);
+				System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS*4/3;
+                int numMidShouldHave = RPS;
 				// scale down for Mid Tier
-				int numMidShouldOpen = numMidShouldHave - Server.frontSize;
+				int numMidShouldOpen = numMidShouldHave - Server.frontTier.size();
                 if (numMidShouldOpen > 0) {
-                    scaleOutMid(numMidShouldOpen);
+                    scaleOutMid(1);
+					countDown = 0;
                 } else {
-                    scaleDownMid(-numMidShouldOpen);
+					countDown ++;
                 }
+				if (countDown == 20)
+					scaleDownMid(1);
 				Thread.sleep(250);
                 /*
     		    // Cold scale down for 10 seconds
@@ -318,8 +324,8 @@ class Schedule implements Runnable {
 	}
 
     public void scaleOutFront(int num) {
-        System.out.print("Front Tier Scaled up\t" + num + "\t");
-        System.out.println(System.currentTimeMillis() - Server.adam);
+        //System.out.print("Front Tier Scaled up\t" + num + "\t");
+        //System.out.println(System.currentTimeMillis() - Server.adam);
         for (int i = 0; i < num && Server.frontSize < 4; i++) {
             Role temp = new RoleFrontTier("frontEnd" + String.valueOf(Server.frontSize++));
             Server.roles.add(temp);
@@ -328,8 +334,8 @@ class Schedule implements Runnable {
     }
 
     public void scaleOutMid(int num) {
-		System.out.print("Mid Tier Scaled up\t"+num+"\t");
-		System.out.println(System.currentTimeMillis() - Server.adam);
+		//System.out.print("Mid Tier Scaled up\t"+num+"\t");
+		//System.out.println(System.currentTimeMillis() - Server.adam);
 		for (int i=0; i<num && Server.midSize < 10; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
 			Server.roles.add(temp);
@@ -338,8 +344,8 @@ class Schedule implements Runnable {
 	}
 
     public void scaleDownMid(int num) throws Exception {
-        System.out.print("Mid Tier Scaled down\t"+num+"\t");
-        System.out.println(System.currentTimeMillis() - Server.adam);
+        //System.out.print("Mid Tier Scaled down\t"+num+"\t");
+        //System.out.println(System.currentTimeMillis() - Server.adam);
         for (int i=0; i<num && Server.midSize > 2; i++) {
             Role temp = Server.midTier.remove(0);
             ChatServer del =
@@ -348,6 +354,7 @@ class Schedule implements Runnable {
             del.closeRole();
         }
     }
+
     public boolean checkRMIForFront(HashMap<Role, ChatServer> frontServer) {
         for (Role role : Server.frontTier) {
             if (!frontServer.containsKey(role)) {
