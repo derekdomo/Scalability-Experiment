@@ -1,9 +1,10 @@
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 class CacheDatabase implements Cloud.DatabaseOps, Serializable {
-    public HashMap<String, String> cache = new HashMap<String, String>();
+    public ConcurrentHashMap<String, String> cache = new ConcurrentHashMap<String, String>();
     public Cloud.DatabaseOps db;
 
     public CacheDatabase(Cloud.DatabaseOps db) {
