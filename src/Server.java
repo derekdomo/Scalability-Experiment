@@ -166,7 +166,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			long st = System.currentTimeMillis();
 			cache = new CacheDatabase(SL.getDB());
             // Drop the first 5 seconds' requests because of no VM can be started
-			while (System.currentTimeMillis()-st<4500) {
+			while (System.currentTimeMillis()-st<5000) {
 				SL.dropHead();
 			}
             while (true) {
@@ -221,7 +221,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 						long now = System.currentTimeMillis();
             	    	RequestPack req = communicateMaster.getRequest();
 						if (!req.r.isPurchase) {
-							if (now-req.timeStamp>750) {
+							if (now-req.timeStamp>720) {
 								SL.drop(req.r);
 							}
 							else
@@ -299,35 +299,53 @@ class Schedule implements Runnable {
 					}
 				}
 				// scale down for Mid Tier
-				if (countDownMid == 80) {
-					if (Server.midSize>2 && avgMidLenDown<Server.midSize*80
+				if (countDownMid == 50) {
+					if (Server.midSize>2 && avgMidLenDown<Server.midSize*50
                             && System.currentTimeMillis()-st_mid_cool_down>7000
                             && lateScaleDown) {
-						Role temp = Server.midTier.remove(0);
-    		        	ChatServer del =
+						int numToClose = avgMidLenDown/80/Server.midSize*2;
+						for (int i=0; i<numToClose; i++) {
+							Role temp = Server.midTier.remove(0);
+    		        		ChatServer del =
                                 Server.getServerInstance(ip, port, temp.nameRegistered);
-						Server.midSize -= 1;
-    		        	del.closeRole();
-                    	System.out.println("Scale down mid tier");
+							Server.midSize -= 1;
+    		        		del.closeRole();
+						}
+                    	System.out.println("Scale down mid tier\t"+numToClose);
 					}
 					countDownMid = 0;
 					avgMidLenDown = 0;
 				}
 				// scale up for Front Tier and Mid Tier
 				if (countUp == 5) {
+					// Front Tier
                     if (System.currentTimeMillis() - st_front_cool_down > coolDown) {
-                        int numToOpen = avgFrontLenUp/5/Server.frontSize;
+						// We can only allow 60 milli secs
+                        int numToOpen = avgFrontLenUp/5/(Server.frontSize+1)/2;
                         if (numToOpen != 0) {
+        					System.out.println("Current Front Tier\t" + Server.frontSize);
+							System.out.println(avgFrontLenUp/5);
                             scaleOutFront(numToOpen);
                             st_front_cool_down = System.currentTimeMillis();
                         }
                     }
+					// Mid Tier
                     if (System.currentTimeMillis() - st_mid_cool_down > coolDown) {
-                        int numToOpen = avgMidLenUp/5/Server.midSize;
+                        int numToOpen = avgMidLenUp/5/Server.midSize*3/2;
+						int diff = avgMidLenUp-Server.midSize;
 						if (numToOpen != 0) {
+        					System.out.println("Current Mid Tier\t"+Server.midSize);
+							System.out.println(avgMidLenUp/5);
 							scaleOutMid(numToOpen * 2);
 							st_mid_cool_down = System.currentTimeMillis();
 						}
+						// Drop extra requests
+						/*
+						for (int i=0; i<diff; i++) {
+							RequestPack req = Server.requests.poll();
+							Server.SL.drop(req.r);
+						}
+						*/
 					}
 					countUp = 0;
 					avgMidLenUp = 0;
@@ -353,7 +371,6 @@ class Schedule implements Runnable {
     public void scaleOutFront(int num) {
         System.out.print("Front Tier Scaled to\t" + num + "\t");
         System.out.println(System.currentTimeMillis() - Server.adam);
-        System.out.println("Current Front Tier\t" + Server.frontSize);
         for (int i = 0; i < num && Server.frontSize < 4; i++) {
             Role temp = new RoleFrontTier("frontEnd" + String.valueOf(Server.frontSize++));
             Server.roles.add(temp);
@@ -364,7 +381,6 @@ class Schedule implements Runnable {
     public void scaleOutMid(int num) {
 		System.out.print("Mid Tier Scaled to\t"+num+"\t");
 		System.out.println(System.currentTimeMillis() - Server.adam);
-        System.out.println("Current Mid Tier\t"+Server.midSize);
 		for (int i=0; i<num && Server.midSize < 10; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
 			Server.roles.add(temp);
