@@ -302,7 +302,7 @@ class Schedule implements Runnable {
 				if (countDownMid == 80) {
 					if (Server.midSize>2 && avgMidLenDown<Server.midSize*80
                             && System.currentTimeMillis()-st_mid_cool_down>7000
-                            && !lateScaleDown) {
+                            && lateScaleDown) {
 						Role temp = Server.midTier.remove(0);
     		        	ChatServer del =
                                 Server.getServerInstance(ip, port, temp.nameRegistered);
@@ -353,6 +353,7 @@ class Schedule implements Runnable {
     public void scaleOutFront(int num) {
         System.out.print("Front Tier Scaled to\t" + num + "\t");
         System.out.println(System.currentTimeMillis() - Server.adam);
+        System.out.println("Current Front Tier\t" + Server.frontSize);
         for (int i = 0; i < num && Server.frontSize < 4; i++) {
             Role temp = new RoleFrontTier("frontEnd" + String.valueOf(Server.frontSize++));
             Server.roles.add(temp);
@@ -363,6 +364,7 @@ class Schedule implements Runnable {
     public void scaleOutMid(int num) {
 		System.out.print("Mid Tier Scaled to\t"+num+"\t");
 		System.out.println(System.currentTimeMillis() - Server.adam);
+        System.out.println("Current Mid Tier\t"+Server.midSize);
 		for (int i=0; i<num && Server.midSize < 10; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
 			Server.roles.add(temp);
