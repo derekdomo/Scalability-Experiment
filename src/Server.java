@@ -292,14 +292,7 @@ class Schedule implements Runnable {
 			long st_cold_start = System.currentTimeMillis();
 			long st_mid_cool_down = 0;
             long st_front_cool_down = 0;
-    		while (true) {
-				for (Role role:Server.frontTier) {
-					if (!frontServer.containsKey(role)) {
-						ChatServer temp =
-                                Server.getServerInstance(ip, port, role.nameRegistered);
-						frontServer.put(role, temp);
-					}
-				}
+    		while (checkRMIForFront(frontServer)) {
 				// scale down for Mid Tier
 				if (countDownMid == 50) {
 					if (Server.midSize>2 && avgMidLenDown<Server.midSize*50
@@ -382,6 +375,16 @@ class Schedule implements Runnable {
     		Server.SL.startVM();
 		}
 	}
+    public boolean checkRMIForFront(HashMap<Role, ChatServer> frontServer) {
+        for (Role role : Server.frontTier) {
+            if (!frontServer.containsKey(role)) {
+                ChatServer temp =
+                        Server.getServerInstance(ip, port, role.nameRegistered);
+                frontServer.put(role, temp);
+            }
+        }
+        return true;
+    }
 
     public int checkFrontTier(HashMap<Role, ChatServer> frontServer) throws Exception {
         int sum = 0;
