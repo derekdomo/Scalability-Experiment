@@ -351,8 +351,8 @@ class Schedule implements Runnable {
 	}
 	
 	public void scaleOutMid(int num) {
-		System.out.print("Mid Tier Scaled to\t"+(System.currentTimeMillis()-Server.adam));
-		System.out.println(num);
+		System.out.print("Mid Tier Scaled to\t"+num+"\t");
+		System.out.println(System.currentTimeMillis()-Server.adam);
 		for (int i=0; i<num && Server.midSize < 10; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
 			Server.roles.add(temp);
@@ -360,8 +360,8 @@ class Schedule implements Runnable {
 		}
 	}
     public void scaleOutFront(int num) {
-        System.out.print("Front Tier Scaled to\t"+(System.currentTimeMillis()-Server.adam));
-        System.out.println(num);
+        System.out.print("Front Tier Scaled to\t"+num+"\t");
+        System.out.println(System.currentTimeMillis()-Server.adam);
         for (int i=0; i<num && Server.midSize < 10; i++) {
             Role temp = new RoleFrontTier("midEnd"+String.valueOf(Server.frontSize++));
             Server.roles.add(temp);
