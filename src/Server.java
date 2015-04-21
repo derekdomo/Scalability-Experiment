@@ -318,14 +318,14 @@ class Schedule implements Runnable {
                     if (System.currentTimeMillis() - st_front_cool_down > coolDown) {
                         int numToOpen = avgFrontLenUp/5/Server.frontSize;
                         if (numToOpen != 0) {
-                            scaleOutFront(numToOpen*2);
-                            st_mid_cool_down = System.currentTimeMillis();
+                            scaleOutFront(numToOpen);
+                            st_front_cool_down = System.currentTimeMillis();
                         }
                     }
                     if (System.currentTimeMillis() - st_mid_cool_down > coolDown) {
                         int numToOpen = avgMidLenUp/5/Server.midSize;
 						if (numToOpen != 0) {
-							scaleOutMid(numToOpen*2);
+							scaleOutMid(numToOpen * 2);
 							st_mid_cool_down = System.currentTimeMillis();
 						}
 					}
@@ -349,25 +349,27 @@ class Schedule implements Runnable {
 			err.printStackTrace();
 		}
 	}
-	
-	public void scaleOutMid(int num) {
+
+    public void scaleOutFront(int num) {
+        System.out.print("Front Tier Scaled to\t" + num + "\t");
+        System.out.println(System.currentTimeMillis() - Server.adam);
+        for (int i = 0; i < num && Server.frontSize < 4; i++) {
+            Role temp = new RoleFrontTier("frontEnd" + String.valueOf(Server.frontSize++));
+            Server.roles.add(temp);
+            Server.SL.startVM();
+        }
+    }
+
+    public void scaleOutMid(int num) {
 		System.out.print("Mid Tier Scaled to\t"+num+"\t");
-		System.out.println(System.currentTimeMillis()-Server.adam);
+		System.out.println(System.currentTimeMillis() - Server.adam);
 		for (int i=0; i<num && Server.midSize < 10; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
 			Server.roles.add(temp);
     		Server.SL.startVM();
 		}
 	}
-    public void scaleOutFront(int num) {
-        System.out.print("Front Tier Scaled to\t"+num+"\t");
-        System.out.println(System.currentTimeMillis()-Server.adam);
-        for (int i=0; i<num && Server.frontSize < 4; i++) {
-            Role temp = new RoleFrontTier("midEnd"+String.valueOf(Server.frontSize++));
-            Server.roles.add(temp);
-            Server.SL.startVM();
-        }
-    }
+
     public int checkFrontTier(HashMap<Role, ChatServer> frontServer) throws Exception {
         int sum = 0;
         for (ChatServer server:frontServer.values())
