@@ -154,13 +154,13 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			return true;
         long now = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (now-req.timeStamp>795) {
+            if (now-req.timeStamp>790) {
                 SL.drop(req.r);
             }
             else
                 SL.processRequest(req.r, cache);
         } else {
-            if (now-req.timeStamp>795) {
+            if (now-req.timeStamp>2000) {
                 SL.drop(req.r);
             }
             else
@@ -301,18 +301,18 @@ class Schedule implements Runnable {
             long st_front_cool_down = 0;
     		while (checkRMIForFront(frontServer)) {
                 RPS = checkFrontTier(frontServer);
-				System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
+				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS;
+                int numMidShouldHave = RPS*4/5;
 				// scale down for Mid Tier
-				int numMidShouldOpen = numMidShouldHave - Server.frontTier.size();
+				int numMidShouldOpen = numMidShouldHave - Server.frontSize;
                 if (numMidShouldOpen > 0) {
                     scaleOutMid(1);
 					countDown = 0;
                 } else {
 					countDown ++;
                 }
-				if (countDown == 20)
+				if (countDown == 18)
 					scaleDownMid(1);
 				Thread.sleep(250);
                 /*
