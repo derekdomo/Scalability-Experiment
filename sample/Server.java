@@ -19,8 +19,10 @@ interface ChatServer extends Remote{
     public int getLength() throws RemoteException;
     public void storeRequest(RequestPack request) throws RemoteException;
     public RequestPack getRequest() throws RemoteException;
+	public void setFlag() throws RemoteException;
 	public Cloud.DatabaseOps getDatabase() throws RemoteException;
-    public boolean scaleUpFront() throws RemoteException;
+	public int getServerLibLength() throws RemoteException;
+	public void dropHead() throws RemoteException;	
 }
 
 public class Server extends UnicastRemoteObject implements ChatServer{ 
@@ -33,12 +35,14 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static ServerLib SL;
     public static Role role;
     public static LinkedList<RequestPack> requests= new LinkedList<RequestPack>();
+    public static int threshHoldAvg = 2;
 	public static boolean startNotification = false; 
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
 	public static Cloud.DatabaseOps cache;
 	public static int frontSize;
 	public static int midSize;
+	public static long adam;
 
  	public void initiateMaster(String ip, int port) {
 		try{
@@ -85,14 +89,15 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     	return requests.size();
     }
 
-    public boolean scaleUpFront() {
-        if (frontSize > 3)
-            return false;
-        Role temp = new RoleFrontTier("frontEnd"+String.valueOf(frontSize++));
-        roles.add(temp);
-        SL.startVM();
-        return true;
-    }
+	public int getServerLibLength() {
+		return SL.getQueueLength();	
+	}
+	
+	public void dropHead() {
+		while (SL.getQueueLength()>1)
+			SL.dropHead();
+	} 
+
     /*
     * RMI Methods for Front Tier
     * */
@@ -100,6 +105,10 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public void storeRequest(RequestPack request) {
     	requests.add(request);
     }
+	// Method for Front tier to notify completion
+	public void setFlag() {
+		startNotification = true;
+	}
 
     /*
     * RMI Methods for Mid Tier
@@ -125,6 +134,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     }
 	
 	public static void main ( String args[] ) throws Exception {
+		adam = System.currentTimeMillis();	
 		if (args.length != 2) throw new Exception("Need 2 args: <cloud_ip> <cloud_port>");
         String ip = args[0];
         int port = Integer.parseInt(args[1]);
@@ -160,28 +170,18 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			System.out.println("Start recieving request");
 			long st = System.currentTimeMillis();
 			cache = new CacheDatabase(SL.getDB());
-			while (System.currentTimeMillis()-st<5000) {
-                if (SL.getQueueLength()>0)
-				    SL.dropHead();
+			while (System.currentTimeMillis()-st<4500) {
+				SL.dropHead();
 			}
             while (true) {
+				if (SL.getQueueLength() == 0) {
+					Thread.sleep(20);
+					continue;
+				}
 				try {
-                    if (SL.getQueueLength()==0) {
-                        // parameter
-                        Thread.sleep(30);
-						continue;
-					}
                 	Cloud.FrontEndOps.Request r = SL.getNextRequest();
 					RequestPack req = new RequestPack(System.currentTimeMillis(), r);
                 	requests.add(req);
-                    if (SL.getQueueLength()>1) {
-                        if (frontSize > 3)
-                            continue;
-                        Role temp = new RoleFrontTier("frontEnd"+String.valueOf(frontSize++));
-                        roles.add(temp);
-                        SL.startVM();
-                    }
-
 				} catch (Exception err){}
             }
 		}
@@ -192,8 +192,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
         else {
          	// get my role
             ChatServer communicateMaster = null;			
-			while (communicateMaster == null)
-				communicateMaster = getServerInstance(ip, port, "master");
+			communicateMaster = getServerInstance(ip, port, "master"); 
 			cache = communicateMaster.getDatabase();
             role = communicateMaster.getRole();
             server.initiateSlave(ip, port, role);	
@@ -203,48 +202,35 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				System.out.println("Front Tier");
 				try {
 					while (!flagShutDown) {
-                        if (SL.getQueueLength()==0) {
-                            //parameter
-                            Thread.sleep(30);
+						if (SL.getQueueLength() == 0) {
+							Thread.sleep(20);
 							continue;
 						}
                 		Cloud.FrontEndOps.Request r = SL.getNextRequest();
 						RequestPack req = new RequestPack(System.currentTimeMillis(), r);
                 		communicateMaster.storeRequest(req);
-                        if (SL.getQueueLength()>1) {
-							
-                        }
 					}
 				} catch (Exception err){
-					err.printStackTrace();
+					System.out.println(err.getMessage());
 				}
 			} else {
 				try{
 					System.out.println("Mid Tier");
             		while (!flagShutDown) {
-                        if (communicateMaster.getLength() == 0) {
-                            //parameter
-                            Thread.sleep(30);
-							continue;
+						if (communicateMaster.getLength() == 0) {
+							Thread.sleep(20);
+							continue;	
 						}
 						long now = System.currentTimeMillis();
             	    	RequestPack req = communicateMaster.getRequest();
-						if (req == null)
-							continue;
 						if (!req.r.isPurchase) {
-							//parameter
-							if (now-req.timeStamp>800) {
-								System.out.print("Browse\t");
-								System.out.println(now-req.timeStamp);
+							if (now-req.timeStamp>750) {
 								SL.drop(req.r);
 							}
 							else
             	    			SL.processRequest(req.r, cache);
 						} else {
-							//parameter
-							if (now-req.timeStamp>1300) {
-								System.out.print("Purchase\t");
-								System.out.println(now-req.timeStamp);
+							if (now-req.timeStamp>1500) {
 								SL.drop(req.r);
 							}
 							else
@@ -294,47 +280,102 @@ class Schedule implements Runnable {
 		this.ip = ip;
 		this.port = port;
 	}	
+	public int checkFrontTier(HashMap<Role, ChatServer> frontServer) throws Exception {
+		int sum = 0;
+        for (Role r : frontServer.keySet()) {
+			for (ChatServer server:frontServer.values()) 
+				sum += server.getServerLibLength();
+		}
+		return sum+Server.SL.getQueueLength();
+	}
 	public void run(){
         // Scale for both browse VM and purchase VM
+        int curMid = 2;
+		int curFront = 1;
 		try {
 			Server.SL.startVM();
 			Server.SL.startVM();
 			Server.SL.startVM();
 			HashMap<Role, ChatServer> frontServer = new HashMap<Role, ChatServer>();
 			Thread.sleep(5000);
+			int avgMidLenDown = 0;
+			int avgMidLenUp = 0;
 			int countDownMid = 0;
 			int countDownFront = 0;
+			int countUpMid = 0;
+			int countUpFront = 0;
+			int coolDown = 10000;
 			boolean lateScaleDown = false;
 			long st = System.currentTimeMillis();
+			long st2 = 0;
     		while (true) {
+				for (Role role:Server.frontTier) {
+					if (!frontServer.containsKey(role)) {
+						ChatServer temp = null; 
+						temp = Server.getServerInstance(ip, port, role.nameRegistered);
+						frontServer.put(role, temp);
+					}
+				}
 				// scale for Front Tier and Mid Tier
-				if (countDownMid == 100 && Server.midSize>2) {
-					Role temp = Server.midTier.remove(0);
-    		        ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
-					Server.midSize -= 1;
-    		        del.closeRole();
+				if (countDownMid == 80) {
+					if (Server.midSize>2 && avgMidLenDown<Server.midSize*80 && System.currentTimeMillis()-st2>7000) {
+						Role temp = Server.midTier.remove(0);
+    		        	ChatServer del = Server.getServerInstance(ip, port, temp.nameRegistered);
+						Server.midSize -= 1;
+    		        	del.closeRole();
+                    	System.out.println("Scale down mid end");
+					}
 					countDownMid = 0;
-                    System.out.println("Scale down mid end");
+					avgMidLenDown = 0;
+				}
+				// scale out for mid tier
+				if (countUpMid == 5) {
+					if (System.currentTimeMillis()-st2>7000) {
+						int numToOpen = avgMidLenUp/5/Server.midSize;
+						if (numToOpen != 0) {
+							scaleOut(numToOpen*2);
+							st2 = System.currentTimeMillis();
+						}
+					}
+					countUpMid = 0;
+					avgMidLenUp = 0;
 				}
 				Thread.sleep(100);
+    		    // scale for browse request VM and purchase request VM
 				if (!lateScaleDown&&(System.currentTimeMillis()-st)>10000)
 					lateScaleDown = true; 
-    		    int obMid = Server.requests.size();
-    		    if (obMid > Server.midSize && Server.midSize<10) {
-                    int diff = Server.requests.size() - Server.midSize;
-					int num = diff/Server.midSize;
-                    for (int i=0; i<num; i++) {
-    		            Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
-					    Server.roles.add(temp);
-    		    	    Server.SL.startVM();
-                    }
-                    countDownMid = 0;
-    		    } else if (lateScaleDown && obMid < Server.midSize){
-					countDownMid++;
+				int cur = checkFrontTier(frontServer);
+				int ratio = 1;
+    		    if (cur > Server.frontSize+1  && Server.frontSize<3) {
+					int diff = cur - Server.frontSize - 1; 
+					for (int i=0; i<diff/ratio && Server.frontSize<3; i++) {
+    		        	Role temp = new RoleFrontTier("frontEnd"+String.valueOf(curFront++));
+						Server.frontSize += 1;
+						Server.roles.add(temp);
+    		    		Server.SL.startVM();
+					}
+                    countDownFront = 0;
+    		    } else if (lateScaleDown && cur < Server.frontSize){
+					countDownFront++;
 				}
+    		    int obMid = Server.requests.size();
+				avgMidLenUp += obMid;
+				avgMidLenDown += obMid;
+                countUpMid++;
+				countDownMid++;
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
+		}
+	}
+	
+	public void scaleOut(int diff) {
+		System.out.print("Mid Tier Scaled to\t"+(System.currentTimeMillis()-Server.adam));
+		System.out.println(diff);
+		for (int i=0; i<diff && Server.midSize < 10; i++) {
+    		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
+			Server.roles.add(temp);
+    		Server.SL.startVM();
 		}
 	}
 }
