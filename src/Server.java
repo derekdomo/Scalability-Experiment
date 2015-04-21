@@ -144,12 +144,15 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			rps+=1;
             RequestPack req = new RequestPack(System.currentTimeMillis(), r);
             master.storeRequest(req);}
-        catch(Exception err){}
+        catch(Exception err){
+			err.printStackTrace();
+		}
         return true;
     }
-	public static boolean processRequest(RequestPack req) {
+	public static boolean processRequest(RequestPack req, Cloud.DatabaseOps cache) {
+		if (req == null)
+			return true;
         long now = System.currentTimeMillis();
-		System.out.println(role.nameRegistered);
         if (!req.r.isPurchase) {
             if (now-req.timeStamp>795) {
                 SL.drop(req.r);
@@ -239,11 +242,12 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				try{
                     cache = communicateMaster.getDatabase();
 					System.out.println("Mid Tier");
-            		while (processRequest(communicateMaster.getRequest())) {
+            		while (processRequest(communicateMaster.getRequest(), cache)) {
                         if (flagShutDown)
                             break;
 					}
 				} catch (Exception err){
+					err.printStackTrace();
 					System.out.println(err.getMessage());
 				}
 			}
