@@ -126,7 +126,40 @@ public class Server extends UnicastRemoteObject implements ChatServer{
             return null;
         }
     }
-	
+
+    public static boolean addRequest(Cloud.FrontEndOps.Request r) {
+        if (r == null)
+            return true;
+        RequestPack req = new RequestPack(System.currentTimeMillis(), r);
+        requests.add(req);
+        return true;
+    }
+    public static boolean addRequestToMaster(Cloud.FrontEndOps.Request r, ChatServer master) {
+        if (r == null)
+            return true;
+        try {
+            RequestPack req = new RequestPack(System.currentTimeMillis(), r);
+            master.storeRequest(req);}
+        catch(Exception err){}
+        return true;
+    }
+	public static boolean processRequest(RequestPack req) {
+        long now = System.currentTimeMillis();
+        if (!req.r.isPurchase) {
+            if (now-req.timeStamp>720) {
+                SL.drop(req.r);
+            }
+            else
+                SL.processRequest(req.r, cache);
+        } else {
+            if (now-req.timeStamp>1500) {
+                SL.drop(req.r);
+            }
+            else
+                SL.processRequest(req.r, cache);
+        }
+        return true;
+    }
 	public static void main ( String args[] ) throws Exception {
 		adam = System.currentTimeMillis();	
 		if (args.length != 2) throw new Exception("Need 2 args: <cloud_ip> <cloud_port>");
@@ -169,17 +202,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			while (System.currentTimeMillis()-st<5000) {
 				SL.dropHead();
 			}
-            while (true) {
-				if (SL.getQueueLength() == 0) {
-					Thread.sleep(20);
-					continue;
-				}
-				try {
-                	Cloud.FrontEndOps.Request r = SL.getNextRequest();
-                    // add timeStamp
-					RequestPack req = new RequestPack(System.currentTimeMillis(), r);
-                	requests.add(req);
-				} catch (Exception err){}
+            while (addRequest(SL.getNextRequest())) {
+                continue;
             }
 		}
         // Slave nodes: real workers
@@ -196,14 +220,9 @@ public class Server extends UnicastRemoteObject implements ChatServer{
             	SL.register_frontend();
 				System.out.println("Front Tier");
 				try {
-					while (!flagShutDown) {
-						if (SL.getQueueLength() == 0) {
-							Thread.sleep(20);
-							continue;
-						}
-                		Cloud.FrontEndOps.Request r = SL.getNextRequest();
-						RequestPack req = new RequestPack(System.currentTimeMillis(), r);
-                		communicateMaster.storeRequest(req);
+					while (addRequestToMaster(SL.getNextRequest(), communicateMaster)) {
+                		if (flagShutDown)
+                            break;
 					}
 				} catch (Exception err){
 					System.out.println(err.getMessage());
@@ -213,26 +232,9 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				try{
                     cache = communicateMaster.getDatabase();
 					System.out.println("Mid Tier");
-            		while (!flagShutDown) {
-						if (communicateMaster.getLength() == 0) {
-							Thread.sleep(20);
-							continue;	
-						}
-						long now = System.currentTimeMillis();
-            	    	RequestPack req = communicateMaster.getRequest();
-						if (!req.r.isPurchase) {
-							if (now-req.timeStamp>720) {
-								SL.drop(req.r);
-							}
-							else
-            	    			SL.processRequest(req.r, cache);
-						} else {
-							if (now-req.timeStamp>1500) {
-								SL.drop(req.r);
-							}
-							else
-            	    			SL.processRequest(req.r, cache);
-						}
+            		while (processRequest(communicateMaster.getRequest())) {
+                        if (flagShutDown)
+                            break;
 					}
 				} catch (Exception err){
 					System.out.println(err.getMessage());
@@ -332,7 +334,6 @@ class Schedule implements Runnable {
 					// Mid Tier
                     if (System.currentTimeMillis() - st_mid_cool_down > coolDown) {
                         int numToOpen = avgMidLenUp/5/Server.midSize*3/2;
-						int diff = avgMidLenUp-Server.midSize;
 						if (numToOpen != 0) {
         					System.out.println("Current Mid Tier\t"+Server.midSize);
 							System.out.println(avgMidLenUp/5);
@@ -340,12 +341,6 @@ class Schedule implements Runnable {
 							st_mid_cool_down = System.currentTimeMillis();
 						}
 						// Drop extra requests
-						/*
-						for (int i=0; i<diff; i++) {
-							RequestPack req = Server.requests.poll();
-							Server.SL.drop(req.r);
-						}
-						*/
 					}
 					countUp = 0;
 					avgMidLenUp = 0;
