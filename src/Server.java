@@ -285,10 +285,7 @@ class Schedule implements Runnable {
 			Server.SL.startVM();
 			HashMap<Role, ChatServer> frontServer = new HashMap<Role, ChatServer>();
 			Thread.sleep(5000);
-			int avgMidLenDown = 0;
-			int avgMidLenUp = 0;
-            int avgFrontLenUp = 0;
-			int countDownMid = 0;
+			int RPS = 0;
 			//int countDownFront = 0;
 			int countUp = 0;
 			int coolDown = 10000;
@@ -297,63 +294,23 @@ class Schedule implements Runnable {
 			long st_mid_cool_down = 0;
             long st_front_cool_down = 0;
     		while (checkRMIForFront(frontServer)) {
+                RPS = checkFrontTier(frontServer);
+                // One mid tier one second at most handle 3 requests
+                int numMidShouldHave = RPS*4/3;
 				// scale down for Mid Tier
-				if (countDownMid == 50) {
-					if (Server.midSize>2 && avgMidLenDown<Server.midSize*50
-                            && System.currentTimeMillis()-st_mid_cool_down>7000
-                            && lateScaleDown) {
-						int numToClose = avgMidLenDown/80/Server.midSize*2;
-						for (int i=0; i<numToClose; i++) {
-							Role temp = Server.midTier.remove(0);
-    		        		ChatServer del =
-                                Server.getServerInstance(ip, port, temp.nameRegistered);
-							Server.midSize -= 1;
-    		        		del.closeRole();
-						}
-                    	System.out.println("Scale down mid tier\t"+numToClose);
-					}
-					countDownMid = 0;
-					avgMidLenDown = 0;
-				}
-				// scale up for Front Tier and Mid Tier
-				if (countUp == 5) {
-					// Front Tier
-                    if (System.currentTimeMillis() - st_front_cool_down > coolDown) {
-						// We can only allow 60 milli secs
-                        int numToOpen = avgFrontLenUp/5/(Server.frontSize+1);
-                        if (numToOpen > 0) {
-        					System.out.println("Current Front Tier\t" + Server.frontSize);
-							System.out.println("Average Length\t"+avgFrontLenUp/5);
-                            scaleOutFront(numToOpen);
-                            st_front_cool_down = System.currentTimeMillis();
-                        }
-                    }
-					// Mid Tier
-                    if (System.currentTimeMillis() - st_mid_cool_down > coolDown) {
-                        int numToOpen =(int) (Math.ceil((double)avgMidLenUp/5.0/(double)Server.midSize/3.0))-Server.midSize;
-						if (numToOpen > 0) {
-        					System.out.println("Current Mid Tier\t"+Server.midSize);
-							System.out.println("Average Length\t"+avgMidLenUp/5);
-							scaleOutMid(numToOpen*2);
-							st_mid_cool_down = System.currentTimeMillis();
-						}
-						// Drop extra requests
-					}
-					countUp = 0;
-					avgMidLenUp = 0;
-                    avgFrontLenUp = 0;
-				}
+				int numMidShouldOpen = numMidShouldHave - Server.frontSize;
+                if (numMidShouldOpen > 0) {
+                    scaleOutMid(numMidShouldOpen);
+                } else {
+                    scaleDownMid(-numMidShouldOpen);
+                }
 				Thread.sleep(250);
+                /*
     		    // Cold scale down for 10 seconds
 				if (!lateScaleDown &&
                         (System.currentTimeMillis()-st_cold_start)>10000)
 					lateScaleDown = true;
-    		    int obMid = Server.requests.size();
-                avgFrontLenUp += checkFrontTier(frontServer);
-				avgMidLenUp += obMid;
-				avgMidLenDown += obMid;
-                countUp++;
-				countDownMid++;
+			    */
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
@@ -361,7 +318,7 @@ class Schedule implements Runnable {
 	}
 
     public void scaleOutFront(int num) {
-        System.out.print("Front Tier Scaled\t" + num + "\t");
+        System.out.print("Front Tier Scaled up\t" + num + "\t");
         System.out.println(System.currentTimeMillis() - Server.adam);
         for (int i = 0; i < num && Server.frontSize < 4; i++) {
             Role temp = new RoleFrontTier("frontEnd" + String.valueOf(Server.frontSize++));
@@ -371,7 +328,7 @@ class Schedule implements Runnable {
     }
 
     public void scaleOutMid(int num) {
-		System.out.print("Mid Tier Scaled\t"+num+"\t");
+		System.out.print("Mid Tier Scaled up\t"+num+"\t");
 		System.out.println(System.currentTimeMillis() - Server.adam);
 		for (int i=0; i<num && Server.midSize < 10; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
@@ -379,6 +336,18 @@ class Schedule implements Runnable {
     		Server.SL.startVM();
 		}
 	}
+
+    public void scaleDownMid(int num) throws Exception {
+        System.out.print("Mid Tier Scaled down\t"+num+"\t");
+        System.out.println(System.currentTimeMillis() - Server.adam);
+        for (int i=0; i<num && Server.midSize > 2; i++) {
+            Role temp = Server.midTier.remove(0);
+            ChatServer del =
+                    Server.getServerInstance(ip, port, temp.nameRegistered);
+            Server.midSize -= 1;
+            del.closeRole();
+        }
+    }
     public boolean checkRMIForFront(HashMap<Role, ChatServer> frontServer) {
         for (Role role : Server.frontTier) {
             if (!frontServer.containsKey(role)) {
