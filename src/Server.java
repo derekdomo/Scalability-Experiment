@@ -304,15 +304,6 @@ class Schedule implements Runnable {
 			long st_mid_cool_down = 0;
             long st_front_cool_down = 0;
     		while (checkRMIForFront(frontServer)) {
-                // notify waited mid tiers
-                if (Server.requests.size()!=0) {
-                    if (Server.readyMidTier.size() != 0) {
-                        Integer name = Server.readyMidTier.remove();
-                        synchronized (name) {
-                            name.notify();
-                        }
-                    }
-                }
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
