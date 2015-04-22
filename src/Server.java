@@ -116,13 +116,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			}catch (Exception err ){}
         }
 		System.out.println("waited\t"+(System.currentTimeMillis()-st));
-		RequestPack r = null;
-		synchronized (requests) {
-			if (!requests.isEmpty()) {
-				r = requests.remove();
-			}
-		}
-		return r;
+		return requests.remove();
     }
 	// Method for Mid Tier to get cache database object
 	public Cloud.DatabaseOps getDatabase() {
