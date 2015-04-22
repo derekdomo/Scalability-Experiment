@@ -10,12 +10,12 @@ import java.util.concurrent.LinkedBlockingDeque;
 interface ChatServer extends Remote{
     public void initiateMaster(String ip, int port) throws RemoteException;
     public void initiateSlave(String ip, int port, Role role) throws RemoteException;
+    public void initiateDatabase(String ip, int port) throws RemoteException;
     public Role getRole() throws RemoteException;
 	public void setRole(Role role) throws RemoteException;
     public void closeRole() throws RemoteException;
     public void storeRequest(RequestPack request) throws RemoteException;
     public RequestPack getRequest() throws RemoteException;
-    public Cloud.DatabaseOps getDatabase() throws RemoteException;
 	public int getRPS() throws RemoteException;
 }
 
@@ -41,7 +41,23 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 	/*
  	*	RMI for Database	
  	* 	*/
-	public 
+    public String get(String key) throws RemoteException {
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        } else {
+            String ret = db.get(key);
+            cache.put(key, ret);
+            return ret;
+        }
+    }
+    public boolean set(String key, String val, String auth) throws RemoteException {
+        return db.set(key, val, auth);
+    }
+    public boolean transaction(String item, float price, int qty) throws RemoteException {
+        return db.transaction(item, price, qty);
+    }
+    // get Database RMI
+
 
     /*
     * RMI for Master
@@ -55,6 +71,14 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 			System.out.println(err.getMessage());
 		}
 	}
+    public void initiateDatabase(String ip, int port) {
+        try{
+            String s = "database";
+            Naming.rebind(String.format("//%s:%d/%s",ip, port, s), this);
+        } catch(Exception err) {
+            System.out.println(err.getMessage());
+        }
+    }
     // Method for Master to call to let Slaves to close
     public void closeRole() {
         SL.shutDown();
@@ -123,16 +147,23 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
             return null;
         }
     }
-	// Method for Mid Tier to get cache database object
-	public Cloud.DatabaseOps getDatabase() {
-		return cache;
-	}
 
     // Method for Slaves to get RMI
     public static ChatServer getServerInstance(String ip, int port, String name) {
         String url = String.format("//%s:%d/%s", ip, port, name);
         try {
             return (ChatServer) Naming.lookup(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Method for Slaves to get RMI
+    public static Cloud.DatabaseOps getDatabase(String ip, int port) {
+        String url = String.format("//%s:%d/%s", ip, port, "database");
+        try {
+            return (Cloud.DatabaseOps) Naming.lookup(url);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -196,6 +227,7 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 		if (SL.getStatusVM(2)==Cloud.CloudOps.VMStatus.NonExistent) {
 			// I am a master
 			server.initiateMaster(ip, port);
+            server.initiateDatabase(ip, port);
 			frontSize = 1;
 			midSize = 2;
             // assign countForFront VMs for front tier
@@ -214,7 +246,7 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
             // Register front end
             SL.register_frontend();
 			long st = System.currentTimeMillis();
-			cache = new CacheDatabase(SL.getDB());
+			db = SL.getDB();
             // Drop the first 5 seconds' requests because of no VM can be started
 			while (System.currentTimeMillis()-st<4800) {
 				rps ++;
@@ -247,10 +279,10 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 				}
 			} else {
                 // Mid Tier
+                Cloud.DatabaseOps cacheDB = getDatabase(ip, port);
 				try{
-                    cache = communicateMaster.getDatabase();
 					System.out.println("Mid Tier");
-                    while (processRequest(communicateMaster.getRequest(), cache)) {
+                    while (processRequest(communicateMaster.getRequest(), cacheDB)) {
                         if (flagShutDown)
                             break;
 					}
