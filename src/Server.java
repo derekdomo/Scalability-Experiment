@@ -149,12 +149,14 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 		}
         return true;
     }
-	public static boolean processRequest(RequestPack req, Cloud.DatabaseOps cache) {
-		if (req == null)
+	public static boolean processRequest(RequestPack req, Cloud.DatabaseOps cache) throws Exception {
+		if (req == null) {
+			Thread.sleep(20);
 			return true;
+		}
         long now = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (now-req.timeStamp>790) {
+            if (now-req.timeStamp>710) {
                 SL.drop(req.r);
             }
             else
@@ -303,17 +305,20 @@ class Schedule implements Runnable {
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS*4/5;
+                int numMidShouldHave = RPS*2;
 				// scale down for Mid Tier
-				int numMidShouldOpen = numMidShouldHave - Server.frontSize;
+				int numMidShouldOpen = numMidShouldHave - Server.midSize;
                 if (numMidShouldOpen > 0) {
                     scaleOutMid(1);
 					countDown = 0;
-                } else {
+					st_mid_cool_down = System.currentTimeMillis();
+                } else if (System.currentTimeMillis()-st_mid_cool_down>7000){
 					countDown ++;
                 }
-				if (countDown == 18)
+				if (countDown == 30) {
+					System.out.println("Scale Down at\t"+(System.currentTimeMillis()-Server.adam));
 					scaleDownMid(1);
+				}
 				Thread.sleep(250);
                 /*
     		    // Cold scale down for 10 seconds
