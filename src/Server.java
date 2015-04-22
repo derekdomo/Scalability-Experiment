@@ -83,7 +83,11 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     }
     // Method for Slaves to call Master to identify his role
 	public Role getRole() {
-        return roles.pollFirst();
+		Role r = null;
+		synchronized (roles) {
+			r = roles.pollFirst();	
+		}
+		return r;
 	}
 	// Method for Slaves to register their roles
 	public void setRole(Role role) {
@@ -115,8 +119,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
             	key.wait();
 			}catch (Exception err ){}
         }
-		System.out.println("waited\t"+(System.currentTimeMillis()-st));
-		return requests.remove();
+		return requests.remove(0);
     }
 	// Method for Mid Tier to get cache database object
 	public Cloud.DatabaseOps getDatabase() {
@@ -218,8 +221,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				Cloud.FrontEndOps.Request r = SL.getNextRequest();
 				SL.drop(r);
 			}
-            //Thread notifyThread = new Thread(new notifyMid());
-            //notifyThread.start();
+            Thread notifyThread = new Thread(new notifyMid());
+            notifyThread.start();
             while (addRequest(SL.getNextRequest())) {
             }
         }
