@@ -23,7 +23,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public Server() throws RemoteException{
 		super();
     }
-	public static LinkedList<Role> roles = new LinkedList<Role>();
+	public static LinkedBlockingDeque<Role> roles = new LinkedBlockingDeque<Role>();
     public static ArrayList<Role> frontTier = new ArrayList<Role>();
     public static ArrayList<Role> midTier= new ArrayList<Role>();
     public static ServerLib SL;
@@ -81,7 +81,12 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     }
     // Method for Slaves to call Master to identify his role
 	public Role getRole() {
-		return roles.remove(0);	
+        try {
+		    return roles.take();
+        } catch (Exception err) {
+            err.printStackTrace();
+            return null;
+        }
 	}
 	// Method for Slaves to register their roles
 	public void setRole(Role role) {
