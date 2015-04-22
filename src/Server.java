@@ -15,9 +15,7 @@ interface ChatServer extends Remote{
 	public void setRole(Role role) throws RemoteException;
     public void closeRole() throws RemoteException;
     public void storeRequest(RequestPack request) throws RemoteException;
-
     public RequestPack getRequest(String name) throws RemoteException, InterruptedException;
-
     public Cloud.DatabaseOps getDatabase() throws RemoteException;
 	public int getRPS() throws RemoteException;
 }
@@ -35,7 +33,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
 	public static Cloud.DatabaseOps cache;
-    public static LinkedList<String> readyMidTier = new LinkedList<String>();
+    public static LinkedList<Integer> readyMidTier = new LinkedList<Integer>();
     public static int frontSize;
 	public static int midSize;
 	public static long adam;
@@ -108,12 +106,23 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     * RMI Methods for Mid Tier
     * */
     // Methods for Mid Tier to get request
-    public RequestPack getRequest(String name) throws InterruptedException {
-        readyMidTier.add(name);
-        synchronized (name) {
-            name.wait();
+    public RequestPack getRequest(String name) {
+		Integer key = Integer.parseInt(name.replace("midEnd",""));
+        readyMidTier.add(key);
+		long st = System.currentTimeMillis();
+        synchronized (key) {
+			try {
+            	key.wait();
+			}catch (Exception err ){}
         }
-        return requests.remove();
+		System.out.println("waited\t"+(System.currentTimeMillis()-st));
+		RequestPack r = null;
+		synchronized (requests) {
+			if (!requests.isEmpty()) {
+				r = requests.remove();
+			}
+		}
+		return r;
     }
 	// Method for Mid Tier to get cache database object
 	public Cloud.DatabaseOps getDatabase() {
@@ -157,7 +166,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 		}
         long now = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (now-req.timeStamp>710) {
+            if (now-req.timeStamp>780) {
                 SL.drop(req.r);
             }
             else
@@ -215,8 +224,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				Cloud.FrontEndOps.Request r = SL.getNextRequest();
 				SL.drop(r);
 			}
-            Thread notifyThread = new Thread(new notifyMid());
-            notifyThread.start();
+            //Thread notifyThread = new Thread(new notifyMid());
+            //notifyThread.start();
             while (addRequest(SL.getNextRequest())) {
             }
         }
@@ -282,20 +291,19 @@ class RoleMidTier extends Role {
 }
 
 class notifyMid implements Runnable {
-    public void run(){
+    public void run() {
         while (true) {
             if (Server.readyMidTier.size() != 0) {
                 if (Server.requests.size() != 0) {
-                    String name = Server.readyMidTier.remove();
+                    Integer name = Server.readyMidTier.remove();
                     synchronized (name) {
                         name.notify();
                     }
-                    continue;
                 }
             }
-            try {
-                Thread.sleep(20);
-            } catch(Exception err){}
+			try {
+				Thread.sleep(10);
+			} catch(Exception err){}
         }
     }
 }
@@ -326,7 +334,7 @@ class Schedule implements Runnable {
                 // notify waited mid tiers
                 if (Server.requests.size()!=0) {
                     if (Server.readyMidTier.size() != 0) {
-                        String name = Server.readyMidTier.remove();
+                        Integer name = Server.readyMidTier.remove();
                         synchronized (name) {
                             name.notify();
                         }
