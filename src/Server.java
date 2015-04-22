@@ -158,7 +158,17 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			return true;
 		}
 		long t = System.currentTimeMillis();
-        SL.processRequest(req.r, cache);
+        if (!req.r.isPurchase) {
+            if (t - req.timeStamp > 790)
+                SL.drop(req.r);
+            else
+                SL.processRequest(req.r, cache);
+        } else {
+            if (t - req.timeStamp > 1600)
+                SL.drop(req.r);
+            else
+                SL.processRequest(req.r, cache);
+        }
         return true;
     }
 	public static void main ( String args[] ) throws Exception {
