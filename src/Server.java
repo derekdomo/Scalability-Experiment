@@ -24,7 +24,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public Server() throws RemoteException{
 		super();
     }
-	public static LinkedBlockingDeque<Role> roles = new LinkedBlockingDeque<Role>();
+	public static LinkedList<Role> roles = new LinkedList<Role>();
     public static ArrayList<Role> frontTier = new ArrayList<Role>();
     public static ArrayList<Role> midTier= new ArrayList<Role>();
     public static ServerLib SL;
@@ -83,11 +83,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     }
     // Method for Slaves to call Master to identify his role
 	public Role getRole() {
-		Role r = null;
-		synchronized (roles) {
-			r = roles.pollFirst();	
-		}
-		return r;
+		return roles.remove(0);	
 	}
 	// Method for Slaves to register their roles
 	public void setRole(Role role) {
@@ -119,7 +115,22 @@ public class Server extends UnicastRemoteObject implements ChatServer{
             	key.wait();
 			}catch (Exception err ){}
         }
-		return requests.remove(0);
+		RequestPack req = null;
+			req = requests.remove(0);
+			long now = System.currentTimeMillis();
+        	if (!req.r.isPurchase) {
+        	    if (now-req.timeStamp>780) {
+					System.out.println("Current Time Stamp"+(now-req.timeStamp));
+        	        SL.drop(req.r);
+					return null;
+        	    }
+        	} else {
+        	    if (now-req.timeStamp>2000) {
+        	        SL.drop(req.r);
+					return null;
+        	    }
+        	}
+		return req;
     }
 	// Method for Mid Tier to get cache database object
 	public Cloud.DatabaseOps getDatabase() {
@@ -161,20 +172,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			Thread.sleep(20);
 			return true;
 		}
-        long now = System.currentTimeMillis();
-        if (!req.r.isPurchase) {
-            if (now-req.timeStamp>780) {
-                SL.drop(req.r);
-            }
-            else
-                SL.processRequest(req.r, cache);
-        } else {
-            if (now-req.timeStamp>2000) {
-                SL.drop(req.r);
-            }
-            else
-                SL.processRequest(req.r, cache);
-        }
+		long t = System.currentTimeMillis();
+        SL.processRequest(req.r, cache);
         return true;
     }
 	public static void main ( String args[] ) throws Exception {
@@ -291,8 +290,10 @@ class notifyMid implements Runnable {
     public void run() {
         while (true) {
             if (Server.readyMidTier.size() != 0) {
+                //System.out.println("Queue Length\t"+Server.requests.size());
+				//System.out.println("Waited Server\t"+Server.readyMidTier.size()+"/"+Server.midTier.size());
                 if (Server.requests.size() != 0) {
-                    Integer name = Server.readyMidTier.remove();
+                    Integer name = Server.readyMidTier.remove(0);
                     synchronized (name) {
                         name.notify();
                     }
@@ -322,32 +323,24 @@ class Schedule implements Runnable {
 			int RPS = 0;
 			//int countDownFront = 0;
 			int countDown = 0;
-			int coolDown = 10000;
+			int coolDown = 30000;
 			boolean lateScaleDown = false;
 			long st_cold_start = System.currentTimeMillis();
 			long st_mid_cool_down = 0;
             long st_front_cool_down = 0;
     		while (checkRMIForFront(frontServer)) {
-                // notify waited mid tiers
-                if (Server.requests.size()!=0) {
-                    if (Server.readyMidTier.size() != 0) {
-                        Integer name = Server.readyMidTier.remove();
-                        synchronized (name) {
-                            name.notify();
-                        }
-                    }
-                }
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS * 5 / 2;
+                int numMidShouldHave = RPS * 5;
                 // scale down for Mid Tier
 				int numMidShouldOpen = numMidShouldHave - Server.midSize;
                 if (numMidShouldOpen > 0) {
+					System.out.println("Scale up\t"+RPS*5);
                     scaleOutMid(1);
 					countDown = 0;
 					st_mid_cool_down = System.currentTimeMillis();
-                } else if (System.currentTimeMillis()-st_mid_cool_down>7000){
+                } else if (System.currentTimeMillis()-st_mid_cool_down>7000 && System.currentTimeMillis()-Server.adam > coolDown){
 					countDown ++;
                 }
 				if (countDown == 30) {

@@ -1,7 +1,6 @@
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.HashMap;
 
 class CacheDatabase implements Cloud.DatabaseOps, Serializable {
     public HashMap<String, String> cache = new HashMap<String, String>();
