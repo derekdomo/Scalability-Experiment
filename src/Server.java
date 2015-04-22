@@ -102,12 +102,6 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     // Methods for the front tier VM to call the leader 
     public void storeRequest(RequestPack request) {
     	requests.add(request);
-        if (readyMidTier.size() != 0) {
-            String name = readyMidTier.remove();
-            synchronized (name) {
-                name.notify();
-            }
-        }
     }
 
     /*
@@ -221,6 +215,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				Cloud.FrontEndOps.Request r = SL.getNextRequest();
 				SL.drop(r);
 			}
+            Thread notifyThread = new Thread(new notifyMid());
+            notifyThread.start();
             while (addRequest(SL.getNextRequest())) {
             }
         }
@@ -285,6 +281,25 @@ class RoleMidTier extends Role {
     }
 }
 
+class notifyMid implements Runnable {
+    public void run(){
+        while (true) {
+            if (Server.readyMidTier.size() != 0) {
+                if (Server.requests.size() != 0) {
+                    String name = Server.readyMidTier.remove();
+                    synchronized (name) {
+                        name.notify();
+                    }
+                    continue;
+                }
+            }
+            try {
+                Thread.sleep(20);
+            } catch(Exception err){}
+        }
+    }
+}
+
 class Schedule implements Runnable {
 	public String ip;
 	public int port;
@@ -308,6 +323,15 @@ class Schedule implements Runnable {
 			long st_mid_cool_down = 0;
             long st_front_cool_down = 0;
     		while (checkRMIForFront(frontServer)) {
+                // notify waited mid tiers
+                if (Server.requests.size()!=0) {
+                    if (Server.readyMidTier.size() != 0) {
+                        String name = Server.readyMidTier.remove();
+                        synchronized (name) {
+                            name.notify();
+                        }
+                    }
+                }
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
