@@ -14,10 +14,11 @@ interface ChatServer extends Remote{
     public Role getRole() throws RemoteException;
 	public void setRole(Role role) throws RemoteException;
     public void closeRole() throws RemoteException;
-    public int getLength() throws RemoteException;
     public void storeRequest(RequestPack request) throws RemoteException;
-    public RequestPack getRequest() throws RemoteException;
-	public Cloud.DatabaseOps getDatabase() throws RemoteException;
+
+    public RequestPack getRequest(String name) throws RemoteException, InterruptedException;
+
+    public Cloud.DatabaseOps getDatabase() throws RemoteException;
 	public int getRPS() throws RemoteException;
 }
 
@@ -34,7 +35,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
 	public static Cloud.DatabaseOps cache;
-	public static int frontSize;
+    public static LinkedList<String> readyMidTier = new LinkedList<String>();
+    public static int frontSize;
 	public static int midSize;
 	public static long adam;
 	public static int rps;
@@ -100,19 +102,24 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     // Methods for the front tier VM to call the leader 
     public void storeRequest(RequestPack request) {
     	requests.add(request);
-    }
-
-    // Method for Mid Tier to check master's request length
-    public int getLength() {
-        return requests.size();
+        if (readyMidTier.size() != 0) {
+            String name = readyMidTier.remove();
+            synchronized (name) {
+                name.notify();
+            }
+        }
     }
 
     /*
     * RMI Methods for Mid Tier
     * */
     // Methods for Mid Tier to get request
-    public RequestPack getRequest() {
-    	return requests.poll();
+    public RequestPack getRequest(String name) throws InterruptedException {
+        readyMidTier.add(name);
+        synchronized (name) {
+            name.wait();
+        }
+        return requests.remove();
     }
 	// Method for Mid Tier to get cache database object
 	public Cloud.DatabaseOps getDatabase() {
@@ -215,9 +222,8 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				SL.drop(r);
 			}
             while (addRequest(SL.getNextRequest())) {
-                continue;
             }
-		}
+        }
         // Slave nodes: real workers
         //          1. FrontTier
         //          2. MidTier
@@ -244,7 +250,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				try{
                     cache = communicateMaster.getDatabase();
 					System.out.println("Mid Tier");
-            		while (processRequest(communicateMaster.getRequest(), cache)) {
+                    while (processRequest(communicateMaster.getRequest(role.nameRegistered), cache)) {
                         if (flagShutDown)
                             break;
 					}
@@ -305,8 +311,8 @@ class Schedule implements Runnable {
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS*2;
-				// scale down for Mid Tier
+                int numMidShouldHave = RPS * 5 / 2;
+                // scale down for Mid Tier
 				int numMidShouldOpen = numMidShouldHave - Server.midSize;
                 if (numMidShouldOpen > 0) {
                     scaleOutMid(1);
@@ -320,12 +326,6 @@ class Schedule implements Runnable {
 					scaleDownMid(1);
 				}
 				Thread.sleep(250);
-                /*
-    		    // Cold scale down for 10 seconds
-				if (!lateScaleDown &&
-                        (System.currentTimeMillis()-st_cold_start)>10000)
-					lateScaleDown = true;
-			    */
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
