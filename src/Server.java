@@ -19,7 +19,7 @@ interface ChatServer extends Remote{
 	public int getRPS() throws RemoteException;
 }
 
-public class Server extends UnicastRemoteObject implements ChatServer{ 
+public class Server extends UnicastRemoteObject implements ChatServer, Cloud.DatabaseOps{ 
 	public Server() throws RemoteException{
 		super();
     }
@@ -29,13 +29,19 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static ServerLib SL;
     public static Role role;
     public static LinkedBlockingDeque<RequestPack> requests= new LinkedBlockingDeque<RequestPack>();
+	public static HashMap<String, String> cache = new HashMap<String, String>();
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
-	public static Cloud.DatabaseOps cache;
+	public static Cloud.DatabaseOps db;
     public static int frontSize;
 	public static int midSize;
 	public static long adam;
 	public static int rps;
+
+	/*
+ 	*	RMI for Database	
+ 	* 	*/
+	public 
 
     /*
     * RMI for Master
@@ -159,7 +165,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 		}
 		long t = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (t - req.timeStamp > 790)
+            if (t - req.timeStamp > 745)
                 SL.drop(req.r);
             else
                 SL.processRequest(req.r, cache);
@@ -210,7 +216,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 			long st = System.currentTimeMillis();
 			cache = new CacheDatabase(SL.getDB());
             // Drop the first 5 seconds' requests because of no VM can be started
-			while (System.currentTimeMillis()-st<5000) {
+			while (System.currentTimeMillis()-st<4800) {
 				rps ++;
 				Cloud.FrontEndOps.Request r = SL.getNextRequest();
 				SL.drop(r);
@@ -305,11 +311,11 @@ class Schedule implements Runnable {
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS * 5;
+                int numMidShouldHave = RPS * 2/3 + 1;
                 // scale down for Mid Tier
 				int numMidShouldOpen = numMidShouldHave - Server.midSize;
                 if (numMidShouldOpen > 0) {
-					System.out.println("Scale up\t"+RPS*5);
+					System.out.println("Scale up\t"+RPS*4);
                     scaleOutMid(1);
 					countDown = 0;
 					st_mid_cool_down = System.currentTimeMillis();
@@ -320,7 +326,7 @@ class Schedule implements Runnable {
 					System.out.println("Scale Down at\t"+(System.currentTimeMillis()-Server.adam));
 					scaleDownMid(1);
 				}
-				Thread.sleep(250);
+				Thread.sleep(500);
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
@@ -340,7 +346,7 @@ class Schedule implements Runnable {
     public void scaleOutMid(int num) {
 		//System.out.print("Mid Tier Scaled up\t"+num+"\t");
 		//System.out.println(System.currentTimeMillis() - Server.adam);
-		for (int i=0; i<num && Server.midSize < 10; i++) {
+		for (int i=0; i<num && Server.midSize < 11; i++) {
     		Role temp = new RoleMidTier("midEnd"+String.valueOf(Server.midSize++));
 			Server.roles.add(temp);
     		Server.SL.startVM();
