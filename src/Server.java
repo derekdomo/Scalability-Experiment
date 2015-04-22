@@ -196,7 +196,7 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 		}
 		long t = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (t - req.timeStamp > 745)
+            if (t - req.timeStamp > 780)
                 SL.drop(req.r);
             else
                 SL.processRequest(req.r, cache);
@@ -248,7 +248,7 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 			long st = System.currentTimeMillis();
 			db = SL.getDB();
             // Drop the first 5 seconds' requests because of no VM can be started
-			while (System.currentTimeMillis()-st<4800) {
+			while (System.currentTimeMillis()-st<4300) {
 				rps ++;
 				Cloud.FrontEndOps.Request r = SL.getNextRequest();
 				SL.drop(r);
@@ -343,7 +343,7 @@ class Schedule implements Runnable {
                 RPS = checkFrontTier(frontServer);
 				//System.out.println("Time\t"+ (System.currentTimeMillis()-Server.adam) + "\t" + RPS*4);
                 // One mid tier one second at most handle 3 requests
-                int numMidShouldHave = RPS * 2/3 + 1;
+                int numMidShouldHave = RPS * 5/3 +1 ;
                 // scale down for Mid Tier
 				int numMidShouldOpen = numMidShouldHave - Server.midSize;
                 if (numMidShouldOpen > 0) {
@@ -357,8 +357,9 @@ class Schedule implements Runnable {
 				if (countDown == 30) {
 					System.out.println("Scale Down at\t"+(System.currentTimeMillis()-Server.adam));
 					scaleDownMid(1);
+					countDown = 0;
 				}
-				Thread.sleep(500);
+				Thread.sleep(250);
     		}
 		} catch(Exception err) {
 			err.printStackTrace();
