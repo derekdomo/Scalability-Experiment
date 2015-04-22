@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingDeque;
 
 interface ChatServer extends Remote{
@@ -15,7 +14,7 @@ interface ChatServer extends Remote{
 	public void setRole(Role role) throws RemoteException;
     public void closeRole() throws RemoteException;
     public void storeRequest(RequestPack request) throws RemoteException;
-    public RequestPack getRequest(String name) throws RemoteException, InterruptedException;
+    public RequestPack getRequest() throws RemoteException;
     public Cloud.DatabaseOps getDatabase() throws RemoteException;
 	public int getRPS() throws RemoteException;
 }
@@ -29,11 +28,10 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     public static ArrayList<Role> midTier= new ArrayList<Role>();
     public static ServerLib SL;
     public static Role role;
-    public static LinkedList<RequestPack> requests= new LinkedList<RequestPack>();
+    public static LinkedBlockingDeque<RequestPack> requests= new LinkedBlockingDeque<RequestPack>();
 	public static ChatServer server; 
 	public static boolean flagShutDown = false;
 	public static Cloud.DatabaseOps cache;
-    public static LinkedList<Integer> readyMidTier = new LinkedList<Integer>();
     public static int frontSize;
 	public static int midSize;
 	public static long adam;
@@ -83,11 +81,12 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     }
     // Method for Slaves to call Master to identify his role
 	public Role getRole() {
-		Role r = null;
-		synchronized (roles) {
-			r = roles.pollFirst();	
-		}
-		return r;
+		try{
+            return roles.takeFirst();
+        } catch(InterruptedException err) {
+            err.printStackTrace();
+            return null;
+        }
 	}
 	// Method for Slaves to register their roles
 	public void setRole(Role role) {
@@ -103,23 +102,20 @@ public class Server extends UnicastRemoteObject implements ChatServer{
     * */
     // Methods for the front tier VM to call the leader 
     public void storeRequest(RequestPack request) {
-    	requests.add(request);
+        requests.add(request);
     }
 
     /*
     * RMI Methods for Mid Tier
     * */
     // Methods for Mid Tier to get request
-    public RequestPack getRequest(String name) {
-		Integer key = Integer.parseInt(name.replace("midEnd",""));
-        readyMidTier.add(key);
-		long st = System.currentTimeMillis();
-        synchronized (key) {
-			try {
-            	key.wait();
-			}catch (Exception err ){}
+    public RequestPack getRequest() {
+        try{
+		    return requests.takeFirst();
+        } catch(InterruptedException err) {
+            err.printStackTrace();
+            return null;
         }
-		return requests.remove(0);
     }
 	// Method for Mid Tier to get cache database object
 	public Cloud.DatabaseOps getDatabase() {
@@ -221,8 +217,6 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				Cloud.FrontEndOps.Request r = SL.getNextRequest();
 				SL.drop(r);
 			}
-            Thread notifyThread = new Thread(new notifyMid());
-            notifyThread.start();
             while (addRequest(SL.getNextRequest())) {
             }
         }
@@ -252,7 +246,7 @@ public class Server extends UnicastRemoteObject implements ChatServer{
 				try{
                     cache = communicateMaster.getDatabase();
 					System.out.println("Mid Tier");
-                    while (processRequest(communicateMaster.getRequest(role.nameRegistered), cache)) {
+                    while (processRequest(communicateMaster.getRequest(), cache)) {
                         if (flagShutDown)
                             break;
 					}
@@ -284,24 +278,6 @@ class RoleFrontTier extends Role {
 class RoleMidTier extends Role {
     public RoleMidTier(String nameRegistered) {
         this.nameRegistered = nameRegistered;
-    }
-}
-
-class notifyMid implements Runnable {
-    public void run() {
-        while (true) {
-            if (Server.readyMidTier.size() != 0) {
-                if (Server.requests.size() != 0) {
-                    Integer name = Server.readyMidTier.remove();
-                    synchronized (name) {
-                        name.notify();
-                    }
-                }
-            }
-			try {
-				Thread.sleep(10);
-			} catch(Exception err){}
-        }
     }
 }
 
