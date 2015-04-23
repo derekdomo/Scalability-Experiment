@@ -196,7 +196,7 @@ public class Server extends UnicastRemoteObject implements ChatServer, Cloud.Dat
 		}
 		long t = System.currentTimeMillis();
         if (!req.r.isPurchase) {
-            if (t - req.timeStamp > 780)
+            if (t - req.timeStamp > 790)
                 SL.drop(req.r);
             else
                 SL.processRequest(req.r, cache);
@@ -358,13 +358,13 @@ class Schedule implements Runnable {
 				int numMidShouldOpen = numMidShouldHave - Server.midSize;
                 if (numMidShouldOpen > 0) {
 					System.out.println("Scale up\t"+RPS);
-                    scaleOutMid(1);
+                    scaleOutMid(numMidShouldOpen);
 					countDown = 0;
 					st_mid_cool_down = System.currentTimeMillis();
                 } else if (System.currentTimeMillis()-st_mid_cool_down>7000 && System.currentTimeMillis()-Server.adam > coolDown){
 					countDown ++;
                 }
-				if (countDown == 18) {
+				if (countDown == 8) {
 					System.out.println("Scale Down at\t"+(System.currentTimeMillis()-Server.adam));
 					scaleDownMid(1);
 					countDown = 0;
